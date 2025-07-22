@@ -1,0 +1,748 @@
+{
+	"info": {
+		"_postman_id": "4d93a39b-348a-449e-9ee4-8e2bfb70c4fd",
+		"name": "wiwiwi",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "46114712",
+		"_collection_link": "https://wiwiwi-9730.postman.co/workspace/WIWIWI~ca3aa9cd-7ef6-424b-b036-49928d65789f/collection/32296388-4d93a39b-348a-449e-9ee4-8e2bfb70c4fd?action=share&source=collection_link&creator=46114712"
+	},
+	"item": [
+		{
+			"name": "Users client",
+			"item": [
+				{
+					"name": "users list",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJmMDYxYzgwOS1jYWQ3LTQ1NzEtYThlZi0wMTEwNTE5OTdkNzMiLCJyb2xlIjoiUk9MRV9NRVJDSEFOVCIsImlhdCI6MTc1MTkxNzE2MiwiZXhwIjoxNzU0NTA5MTYyfQ.TSTujtSpVAZo6zMBsnUCV1R7AxeVTLaUIO3SoBwl5Vk"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:3001/users",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3001",
+							"path": [
+								"users"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "user info",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJmMDYxYzgwOS1jYWQ3LTQ1NzEtYThlZi0wMTEwNTE5OTdkNzMiLCJyb2xlIjoiUk9MRV9NRVJDSEFOVCIsImlhdCI6MTc1MTQ0NTg0MCwiZXhwIjoxNzUxNDQ2NzQwfQ.fBp8KSaRHdhDQE8GAOEHHUsblhn6qb_YZ2nWOnMiWjc",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:3001/users/1397c6ee-e2dc-4f99-b6b9-03807c28c39c",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3001",
+							"path": [
+								"users",
+								"1397c6ee-e2dc-4f99-b6b9-03807c28c39c"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get credential of user",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJmMDYxYzgwOS1jYWQ3LTQ1NzEtYThlZi0wMTEwNTE5OTdkNzMiLCJyb2xlIjoiUk9MRV9NRVJDSEFOVCIsImlhdCI6MTc1MTQ0NTg0MCwiZXhwIjoxNzUxNDQ2NzQwfQ.fBp8KSaRHdhDQE8GAOEHHUsblhn6qb_YZ2nWOnMiWjc",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:3001/users/1397c6ee-e2dc-4f99-b6b9-03807c28c39c/credentials",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3001",
+							"path": [
+								"users",
+								"1397c6ee-e2dc-4f99-b6b9-03807c28c39c",
+								"credentials"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "post credential of user",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJmMDYxYzgwOS1jYWQ3LTQ1NzEtYThlZi0wMTEwNTE5OTdkNzMiLCJyb2xlIjoiUk9MRV9NRVJDSEFOVCIsImlhdCI6MTc1MTQ0NTg0MCwiZXhwIjoxNzUxNDQ2NzQwfQ.fBp8KSaRHdhDQE8GAOEHHUsblhn6qb_YZ2nWOnMiWjc",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:3001/users/1397c6ee-e2dc-4f99-b6b9-03807c28c39c/credentials",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3001",
+							"path": [
+								"users",
+								"1397c6ee-e2dc-4f99-b6b9-03807c28c39c",
+								"credentials"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "user update",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJmMDYxYzgwOS1jYWQ3LTQ1NzEtYThlZi0wMTEwNTE5OTdkNzMiLCJyb2xlIjoiUk9MRV9NRVJDSEFOVCIsImlhdCI6MTc1MTQ0NTg0MCwiZXhwIjoxNzUxNDQ2NzQwfQ.fBp8KSaRHdhDQE8GAOEHHUsblhn6qb_YZ2nWOnMiWjc"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"firstName\": \"Jean\",\n    \"lastName\": \"Dupond\"\n  }",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3001/users/1397c6ee-e2dc-4f99-b6b9-03807c28c39c",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3001",
+							"path": [
+								"users",
+								"1397c6ee-e2dc-4f99-b6b9-03807c28c39c"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete user by id",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJmMDYxYzgwOS1jYWQ3LTQ1NzEtYThlZi0wMTEwNTE5OTdkNzMiLCJyb2xlIjoiUk9MRV9NRVJDSEFOVCIsImlhdCI6MTc1MTQ0NTg0MCwiZXhwIjoxNzUxNDQ2NzQwfQ.fBp8KSaRHdhDQE8GAOEHHUsblhn6qb_YZ2nWOnMiWjc",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:3001/users/1397c6ee-e2dc-4f99-b6b9-03807c28c39c",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3001",
+							"path": [
+								"users",
+								"1397c6ee-e2dc-4f99-b6b9-03807c28c39c"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "auth",
+			"item": [
+				{
+					"name": "auth token refresh",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJmMDYxYzgwOS1jYWQ3LTQ1NzEtYThlZi0wMTEwNTE5OTdkNzMiLCJpYXQiOjE3NTE0NDU2MjgsImV4cCI6MTc1MjA1MDQyOH0._s2Ax6WasCA4CO-leeMFWheH6_4dmnolvPPn8e8fHR8",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"refreshToken\":\"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJmMDYxYzgwOS1jYWQ3LTQ1NzEtYThlZi0wMTEwNTE5OTdkNzMiLCJyb2xlIjoiUk9MRV9NRVJDSEFOVCIsImlhdCI6MTc1MTU2MTI3OCwiZXhwIjoxNzUxNTYyMTc4fQ.57n8W5Z-uL5rFbSwe6m8LrFAeVu3eMSCAiigVDPV1ag\"\n  }",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3001/auth/refresh",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3001",
+							"path": [
+								"auth",
+								"refresh"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "auth merchant register",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"firstName\":\"Alice\",\n    \"lastName\":\"Dupont\",\n    \"companyName\":\"Acme Corp\",\n    \"kbis\":\"KBIS123\",\n    \"email\":\"alceaz@acme.com\",\n    \"password\":\"secret\",\n    \"type\":\"merchant\"\n  }",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3001/auth/register",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3001",
+							"path": [
+								"auth",
+								"register"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "auth client register",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"type\":      \"client\",\n    \"firstName\": \"Jean\",\n    \"lastName\":  \"Dupont\",\n    \"email\":     \"yannoazeu@example.com\",\n    \"password\":  \"secret\"\n  }",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3001/auth/register",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3001",
+							"path": [
+								"auth",
+								"register"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "auth client/merchant login",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"email\":    \"baptiste@example.com\",\n    \"password\": \"secret\"\n  }",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3001/auth/login",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3001",
+							"path": [
+								"auth",
+								"login"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "payment",
+			"item": [
+				{
+					"name": "Get Payments",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJmMDYxYzgwOS1jYWQ3LTQ1NzEtYThlZi0wMTEwNTE5OTdkNzMiLCJyb2xlIjoiUk9MRV9NRVJDSEFOVCIsImlhdCI6MTc1MTg5MjUwMywiZXhwIjoxNzU0NDg0NTAzfQ.gque8Z1-1nwo8HUbemiewsv60PSezkpSLNqjUrj1Sjw",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:3001/payments",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3001",
+							"path": [
+								"payments"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "webhook",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJmMDYxYzgwOS1jYWQ3LTQ1NzEtYThlZi0wMTEwNTE5OTdkNzMiLCJyb2xlIjoiUk9MRV9NRVJDSEFOVCIsImlhdCI6MTc1MTg5MjUwMywiZXhwIjoxNzU0NDg0NTAzfQ.gque8Z1-1nwo8HUbemiewsv60PSezkpSLNqjUrj1Sjw",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"id\":\"a7ff6464-e7a0-44ac-89dd-3b36004fee19\",\n    \"status\":\"SUCCESS\"\n  }",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3001/payments/psp",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3001",
+							"path": [
+								"payments",
+								"psp"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create Payments",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJmMDYxYzgwOS1jYWQ3LTQ1NzEtYThlZi0wMTEwNTE5OTdkNzMiLCJyb2xlIjoiUk9MRV9NRVJDSEFOVCIsImlhdCI6MTc1MTkxNzE2MiwiZXhwIjoxNzU0NTA5MTYyfQ.TSTujtSpVAZo6zMBsnUCV1R7AxeVTLaUIO3SoBwl5Vk",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"buyer_id\":  \"3be62098-f258-4f7b-bc41-aa76661a86e2\",\n    \"amount\":    42.5,\n    \"currency\":  \"EUR\",\n    \"stripe_id\": \"STRIPE12122312315\"\n  }",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3001/payments",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3001",
+							"path": [
+								"payments"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Payment",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"status\":\"SUCCESS\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3001/payments/685a93409c33f1106f8a18bc",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3001",
+							"path": [
+								"payments",
+								"685a93409c33f1106f8a18bc"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Payment",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJmMDYxYzgwOS1jYWQ3LTQ1NzEtYThlZi0wMTEwNTE5OTdkNzMiLCJyb2xlIjoiUk9MRV9NRVJDSEFOVCIsImlhdCI6MTc1MTg5MjUwMywiZXhwIjoxNzU0NDg0NTAzfQ.gque8Z1-1nwo8HUbemiewsv60PSezkpSLNqjUrj1Sjw",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:3001/payments/8085a67a-c42d-42fb-afd6-945dd1a7a62f",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3001",
+							"path": [
+								"payments",
+								"8085a67a-c42d-42fb-afd6-945dd1a7a62f"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Merchants client",
+			"item": [
+				{
+					"name": "merchants list",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJmMDYxYzgwOS1jYWQ3LTQ1NzEtYThlZi0wMTEwNTE5OTdkNzMiLCJyb2xlIjoiUk9MRV9NRVJDSEFOVCIsImlhdCI6MTc1MTg5MjQ0MywiZXhwIjoxNzU0NDg0NDQzfQ.fguD3C-AxUu5f0o0P56-jhu5QjTFLkG6U1zMXt317AM"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:3001/merchants",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3001",
+							"path": [
+								"merchants"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "merchants info",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJmMDYxYzgwOS1jYWQ3LTQ1NzEtYThlZi0wMTEwNTE5OTdkNzMiLCJyb2xlIjoiUk9MRV9NRVJDSEFOVCIsImlhdCI6MTc1MTU2MTI3OCwiZXhwIjoxNzUxNTYyMTc4fQ.57n8W5Z-uL5rFbSwe6m8LrFAeVu3eMSCAiigVDPV1ag",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:3001/merchants/f061c809-cad7-4571-a8ef-011051997d73",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3001",
+							"path": [
+								"merchants",
+								"f061c809-cad7-4571-a8ef-011051997d73"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get credential of merchants",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJmMDYxYzgwOS1jYWQ3LTQ1NzEtYThlZi0wMTEwNTE5OTdkNzMiLCJyb2xlIjoiUk9MRV9NRVJDSEFOVCIsImlhdCI6MTc1MTU2MjUwNiwiZXhwIjoxNzUxNTYzNDA2fQ.I2HICXLvGGnZzEGDv3T3l-3Lgf7skD0kyvqSQKlycn8"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:3001/merchants/f061c809-cad7-4571-a8ef-011051997d73/credentials",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3001",
+							"path": [
+								"merchants",
+								"f061c809-cad7-4571-a8ef-011051997d73",
+								"credentials"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "merchants update",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2MzM2M2I2OS0xODllLTRiNzktYWVmNy05MDA3MjBhOGM3ZTciLCJyb2xlIjoiUk9MRV9NRVJDSEFOVCIsImlhdCI6MTc1MTU2MzE3MSwiZXhwIjoxNzUxNTY0MDcxfQ.o2ZOuo4akwGUokagpCQjcEsECBCmPedfDlheiGBzxtw",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"companyName\":    \"KRIKRIK\",\n    \"kbis\":           \"KBIS-1234566\"\n  }",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3001/merchants/63363b69-189e-4b79-aef7-900720a8c7e7",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3001",
+							"path": [
+								"merchants",
+								"63363b69-189e-4b79-aef7-900720a8c7e7"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete merchants by id",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJhNDBmOTYwNy03ODY0LTQ5MzUtYjM4Ni1jZWM5ZTJhZWE5MTQiLCJyb2xlIjoiUk9MRV9NRVJDSEFOVCIsImlhdCI6MTc1MTU2MjkxNCwiZXhwIjoxNzUxNTYzODE0fQ.uFllcIQ9gu5pnCSTGHYdPNtmaGErqxBeURs-vwKLZcU"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:3001/merchants/a40f9607-7864-4935-b386-cec9e2aea914",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3001",
+							"path": [
+								"merchants",
+								"a40f9607-7864-4935-b386-cec9e2aea914"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "http://localhost:3001/auth/register",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"type\":      \"client\",\n    \"firstName\": \"Jean\",\n    \"lastName\":  \"Dupont\",\n    \"email\":     \"jean.dupont@example.com\",\n    \"password\":  \"secret\"\n  }",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3001/auth/register",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3001",
+					"path": [
+						"auth",
+						"register"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"auth": {
+		"type": "bearer",
+		"bearer": [
+			{
+				"key": "token",
+				"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJmMDYxYzgwOS1jYWQ3LTQ1NzEtYThlZi0wMTEwNTE5OTdkNzMiLCJyb2xlIjoiUk9MRV9NRVJDSEFOVCIsImlhdCI6MTc1MTQ0NTg0MCwiZXhwIjoxNzUxNDQ2NzQwfQ.fBp8KSaRHdhDQE8GAOEHHUsblhn6qb_YZ2nWOnMiWjc",
+				"type": "string"
+			}
+		]
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		}
+	]
+}
