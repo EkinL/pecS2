@@ -45,6 +45,7 @@
 
 <script>
 import { mapGetters, mapActions } from 'vuex'
+import sseService from '../../services/sseService'
 
 export default {
   name: 'AdminTransactions',
@@ -53,6 +54,13 @@ export default {
   },
   computed: {
     ...mapGetters('admin', ['payments']),
+  },
+  async created() {
+    await this.fetchPayments()
+    sseService.connect()
+  },
+  beforeUnmount() {
+    sseService.close()
   },
   methods: {
     ...mapActions('admin', ['fetchPayments']),

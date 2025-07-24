@@ -178,6 +178,12 @@ export default {
     }
   },
   beforeUnmount() {
+    if (this.isAdmin) {
+      statsSseService.close()
+      activitySseService.close()
+    }
+  },
+  beforeUnmount() {
     if (this.isAdmin) statsSseService.close()
   },
   methods: {

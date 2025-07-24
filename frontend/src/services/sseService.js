@@ -10,6 +10,7 @@ const sseService = {
       try {
         const data = JSON.parse(e.data)
         store.commit('payments/SET_PAYMENT_STATUS', data)
+        store.commit('admin/SET_PAYMENT_STATUS', data)
       } catch (err) {
         console.error('[SSE] Invalid message', err)
       }
@@ -28,3 +29,4 @@ const sseService = {
 }
 
 export default sseService
+

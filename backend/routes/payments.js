@@ -7,6 +7,7 @@ const authenticateToken      = require('../middleware/auth');
 const authorizePaymentAccess = require('../middleware/authorizePaymentAccess');
 const valideCard             = require('../middleware/valideCard');
 const axios                  = require('axios');
+const { Op }                 = require('sequelize');
 const { broadcastPayment, broadcastStats, computeStats }   = require('../sse');
 
 const {
@@ -41,15 +42,31 @@ router.get(
   authorizePaymentAccess,
   async (req, res) => {
     const { role, scope } = req;
+    const { q } = req.query;
+
+    const baseWhere = scope?.where || {};
+    const where = { ...baseWhere };
+    if (q) {
+      where[Op.or] = [
+        { id: { [Op.iLike]: `%${q}%` } },
+        { stripe_id: { [Op.iLike]: `%${q}%` } },
+      ];
+    }
 
     try {
-      const all = role === ADMIN ? await Payment.findAll() : await Payment.findAll(scope);
+      const all = role === ADMIN ? await Payment.findAll({ where }) : await Payment.findAll({ where });
       return res.json(all);
     } catch (err) {
       console.warn('[PAYMENTS GET ALL] SQL error, fallback Mongo', err);
     }
 
-    const filter   = scope?.where || {};
+    const filter = { ...baseWhere };
+    if (q) {
+      filter.$or = [
+        { _id: { $regex: q, $options: 'i' } },
+        { stripe_id: { $regex: q, $options: 'i' } },
+      ];
+    }
     const allMongo = await PaymentMongo.find(filter).exec();
     return res.json(allMongo);
   }

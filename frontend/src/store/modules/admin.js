@@ -29,6 +29,12 @@ const mutations = {
   SET_USERS(state, users) {
     state.users = users
   },
+  SET_PAYMENT_STATUS(state, { id, status }) {
+    const p = state.payments.find((pay) => pay.id === id)
+    if (p) {
+      p.status = status
+    }
+  },
   SET_ACTIVITIES(state, activities) {
     state.activities = activities
   },
