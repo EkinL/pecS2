@@ -5,9 +5,7 @@
 </template>
 
 <script>
-import { Chart, BarElement, CategoryScale, LinearScale, Tooltip, Legend } from 'chart.js'
-
-Chart.register(BarElement, CategoryScale, LinearScale, Tooltip, Legend)
+import Chart from 'chart.js/auto'
 
 export default {
   name: 'BarChart',
@@ -16,18 +14,23 @@ export default {
     labels: { type: Array, required: true }
   },
   mounted() {
-    this.renderChart()
+    this.createChart()
+  },
+  beforeUnmount() {
+    if (this.chart) {
+      this.chart.destroy()
+    }
   },
   watch: {
     data() {
-      this.renderChart()
+      this.updateChart()
+    },
+    labels() {
+      this.updateChart()
     }
   },
   methods: {
-    renderChart() {
-      if (this.chart) {
-        this.chart.destroy()
-      }
+    createChart() {
       this.chart = new Chart(this.$refs.canvas.getContext('2d'), {
         type: 'bar',
         data: {
@@ -50,6 +53,15 @@ export default {
           }
         }
       })
+    },
+    updateChart() {
+      if (!this.chart) {
+        this.createChart()
+        return
+      }
+      this.chart.data.labels = this.labels
+      this.chart.data.datasets[0].data = this.data
+      this.chart.update()
     }
   }
 }

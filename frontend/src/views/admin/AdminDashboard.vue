@@ -19,7 +19,7 @@
         <StatsCard title="Revenus" :value="`${stats.totalAmount?.toFixed(2) || 0}€`" icon="DollarSign" color="yellow" />
       </div>
 
-      <div class="mt-8 h-64">
+      <div class="mt-8 relative h-64">
         <BarChart :data="chartData" :labels="['Marchands','Clients','Transactions']" />
       </div>
     </div>
