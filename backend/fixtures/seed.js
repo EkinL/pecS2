@@ -29,29 +29,40 @@ async function main() {
   const plainPassword = 'secret';
   const hashedPassword = await bcrypt.hash(plainPassword, 10);
 
-  // --- Création de deux marchands ---
+  // --- Création de 3 marchands ---
   console.log('🔄 Création des marchands…');
-  const [m1, m2] = await Promise.all([
-    Merchant.create({type: "merchant", email: 'alex@gmail.com', password: hashedPassword, companyName: 'ACME Corp', kbis: 'KBIS001' }),
+  const [m1, m2, m3] = await Promise.all([
+    Merchant.create({type: "merchant", email: 'alex@gmail.com',   password: hashedPassword, companyName: 'ACME Corp',  kbis: 'KBIS001' }),
     Merchant.create({type: "merchant", email: 'lilian@gmail.com', password: hashedPassword, companyName: 'Globex Inc', kbis: 'KBIS002' }),
+    Merchant.create({type: "merchant", email: 'emma@gmail.com',   password: hashedPassword, companyName: 'Initech',    kbis: 'KBIS003' }),
   ]);
 
-  // --- Création de trois utilisateurs “clients” ---
+  // --- Création de 3 utilisateurs clients ---
   console.log('🔄 Création des clients…');
   const [u1, u2, u3] = await Promise.all([
     User.create({ type: "client", email: 'baptiste@gmail.com', password: hashedPassword, firstName: 'Alice', lastName: 'Liddell' }),
-    User.create({ type: "client", email: 'karl@gmail.com', password: hashedPassword, firstName: 'Bob',   lastName: 'Marley'   }),
-    User.create({ type: "client", email: 'Pedro@gmail.com', password: hashedPassword, firstName: 'Perdo', lastName: 'Odrep', role: 'ROLE_ADMIN' }),
+    User.create({ type: "client", email: 'karl@gmail.com',     password: hashedPassword, firstName: 'Bob',   lastName: 'Marley'   }),
+    User.create({ type: "client", email: 'pedro@gmail.com',    password: hashedPassword, firstName: 'Pedro', lastName: 'Odrep', role: 'ROLE_ADMIN' }),
   ]);
 
-  // --- Création de quelques paiements ---
+  // --- Création de paiements (10+ répartis) ---
   console.log('🔄 Création des paiements…');
-  await Promise.all([
-    Payment.create({ seller_id: m1.id, buyer_id: u1.id, amount: 10.5, currency: 'EUR', stripe_id: 'STRIPE_001' }),
-    Payment.create({ seller_id: m1.id, buyer_id: u2.id, amount: 20.0, currency: 'USD', stripe_id: 'STRIPE_002' }),
-    Payment.create({ seller_id: m2.id, buyer_id: u1.id, amount: 15.75, currency: 'GBP', stripe_id: 'STRIPE_003' }),
-    Payment.create({ seller_id: m2.id, buyer_id: u2.id, amount:  5.0, currency: 'JPY', stripe_id: 'STRIPE_004' }),
-  ]);
+  const paymentsData = [
+    { seller_id: m1.id, buyer_id: u1.id, amount: 12.5, currency: 'EUR', stripe_id: 'STRIPE_001' },
+    { seller_id: m1.id, buyer_id: u2.id, amount: 23.0, currency: 'USD', stripe_id: 'STRIPE_002' },
+    { seller_id: m1.id, buyer_id: u3.id, amount: 8.75, currency: 'EUR', stripe_id: 'STRIPE_003' },
+    { seller_id: m2.id, buyer_id: u1.id, amount: 15.0, currency: 'USD', stripe_id: 'STRIPE_004' },
+    { seller_id: m2.id, buyer_id: u2.id, amount: 30.0, currency: 'GBP', stripe_id: 'STRIPE_005' },
+    { seller_id: m2.id, buyer_id: u3.id, amount: 17.25, currency: 'JPY', stripe_id: 'STRIPE_006' },
+    { seller_id: m3.id, buyer_id: u1.id, amount: 9.99, currency: 'CAD', stripe_id: 'STRIPE_007' },
+    { seller_id: m3.id, buyer_id: u2.id, amount: 42.0, currency: 'EUR', stripe_id: 'STRIPE_008' },
+    { seller_id: m3.id, buyer_id: u3.id, amount: 18.3, currency: 'USD', stripe_id: 'STRIPE_009' },
+    { seller_id: m1.id, buyer_id: u1.id, amount: 11.0, currency: 'EUR', stripe_id: 'STRIPE_010' },
+    { seller_id: m2.id, buyer_id: u2.id, amount: 25.5, currency: 'GBP', stripe_id: 'STRIPE_011' },
+    { seller_id: m3.id, buyer_id: u3.id, amount: 6.6,  currency: 'USD', stripe_id: 'STRIPE_012' },
+  ];
+
+  await Payment.bulkCreate(paymentsData);
 
   console.log('✅ Fixtures appliquées avec succès !');
   process.exit(0);
