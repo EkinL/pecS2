@@ -88,7 +88,7 @@
           <h3 class="text-lg leading-6 font-medium text-gray-900">
             Mettre à jour mes informations
           </h3>
-          <p class="mt-1 max-w-2xl text-sm text-gray-500">Modifiez votre nom et votre email.</p>
+          <p class="mt-1 max-w-2xl text-sm text-gray-500">Modifiez votre nom, votre email et votre entreprise.</p>
         </div>
         <div class="border-t border-gray-200 px-4 py-5 sm:px-6">
           <form @submit.prevent="handleUpdateProfile" class="space-y-4">
@@ -122,6 +122,16 @@
                 id="email"
                 v-model="profileForm.email"
                 type="email"
+                required
+                class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
+              />
+            </div>
+            <div v-if="isMerchant">
+              <label for="companyName" class="block text-sm font-medium text-gray-700">Entreprise</label>
+              <input
+                id="companyName"
+                v-model="profileForm.companyName"
+                type="text"
                 required
                 class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
               />
@@ -160,6 +170,7 @@ export default {
         firstName: '',
         lastName: '',
         email: '',
+        companyName: '',
       },
       profileLoading: false,
       editingProfile: false,
@@ -177,6 +188,7 @@ export default {
     this.profileForm.firstName = this.user.firstName
     this.profileForm.lastName = this.user.lastName
     this.profileForm.email = this.user.email
+    this.profileForm.companyName = this.user.companyName
   },
   methods: {
     ...mapActions('ui', ['showToast']),
@@ -187,6 +199,7 @@ export default {
         this.profileForm.firstName = this.user.firstName
         this.profileForm.lastName = this.user.lastName
         this.profileForm.email = this.user.email
+        this.profileForm.companyName = this.user.companyName
       }
     },
     async handleGenerateCredentials() {
@@ -230,6 +243,7 @@ export default {
           firstName: this.profileForm.firstName,
           lastName: this.profileForm.lastName,
           email: this.profileForm.email,
+          companyName: this.profileForm.companyName,
         })
         this.editingProfile = false
       } catch (error) {
