@@ -36,7 +36,7 @@
                       {{ formatDate(payment.createdAt) }}
                     </td>
                     <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-                      {{ payment.seller_id.slice(-8) }}
+                      {{ formatSeller(payment.seller, payment.seller_id) }}
                     </td>
                     <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
                       {{ payment.amount }}{{ payment.currency }}
@@ -105,6 +105,14 @@ export default {
         default:
           return 'bg-gray-100 text-gray-800'
       }
+    },
+    formatSeller(seller, id) {
+      if (!seller) return id.slice(-8)
+      if (seller.role === 'ROLE_MERCHANT' && seller.companyName) {
+        return seller.companyName
+      }
+      const name = `${seller.firstName || ''} ${seller.lastName || ''}`.trim()
+      return name || id.slice(-8)
     }
   }
 }
