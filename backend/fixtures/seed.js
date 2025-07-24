@@ -80,25 +80,26 @@ async function main() {
   console.log(' • Client Bob     :', clientBob.id);
   console.log(' • Admin Pedro    :', admin.id);
 
-  // payment
+  // Paiements
   console.log('🔄 Création des paiements…');
-  await Promise.all([
-    Payment.create({
-      seller_id:  merchantActive.id,
-      buyer_id:   clientAlice.id,
-      amount:     12.34,
-      currency:   'EUR',
-      stripe_id:  'STRIPE_1001'
-    }),
-    Payment.create({
-      seller_id:  merchantActive.id,
-      buyer_id:   clientBob.id,
-      amount:     45.00,
-      currency:   'USD',
-      stripe_id:  'STRIPE_1002'
-    })
-  ]);
-  console.log('✅ Paiements créés');
+  const currencies = ['EUR', 'USD', 'GBP', 'JPY'];
+  const createPayments = (seller, buyers, prefix) => {
+    return Array.from({ length: 10 }).map((_, i) => ({
+      seller_id: seller.id,
+      buyer_id: buyers[i % buyers.length].id,
+      amount: parseFloat((Math.random() * 100 + 1).toFixed(2)),
+      currency: currencies[i % currencies.length],
+      stripe_id: `${prefix}_${1000 + i}`
+    }));
+  };
+
+  const payments = [
+    ...createPayments(merchantActive, [clientAlice, clientBob], 'ACTIVE'),
+    ...createPayments(merchantPending, [clientAlice, clientBob], 'PENDING')
+  ];
+
+  await Payment.bulkCreate(payments);
+  console.log('✅ 20 paiements créés pour les marchands');
 
   process.exit(0);
 }
