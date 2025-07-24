@@ -1,7 +1,7 @@
 <template>
   <div class="max-w-7xl mx-auto py-6 sm:px-6 lg:px-8">
     <div class="px-4 py-6 sm:px-0">
-      <h1 class="text-2xl font-bold mb-6">Utilisateurs</h1>
+      <h1 class="text-2xl font-bold mb-6">Clients</h1>
       <table class="min-w-full divide-y divide-gray-200 shadow">
         <thead class="bg-gray-50">
           <tr>
@@ -38,7 +38,7 @@
 import { mapGetters, mapActions } from 'vuex'
 
 export default {
-  name: 'AdminUsers',
+  name: 'AdminClients',
   computed: {
     ...mapGetters('admin', ['users']),
   },

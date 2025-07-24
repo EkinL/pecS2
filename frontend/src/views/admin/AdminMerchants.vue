@@ -31,7 +31,7 @@
                 Approuver
               </button>
               <button @click="impersonate(m.id)" class="text-indigo-600 hover:text-indigo-900">
-                Impersonate
+                Se connecter en tant que
               </button>
             </td>
           </tr>

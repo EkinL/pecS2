@@ -20,7 +20,7 @@ import Profile from '../views/Profile.vue'
 import ClientHistory from '../views/client/History.vue'
 import AdminMerchants from '../views/admin/AdminMerchants.vue'
 import AdminTransactions from '../views/admin/AdminTransactions.vue'
-import AdminUsers from '../views/admin/AdminUsers.vue'
+import AdminClients from '../views/admin/AdminClients.vue'
 
 const routes = [
   {
@@ -64,9 +64,9 @@ const routes = [
     meta: { requiresAuth: true },
   },
   {
-    path: '/admin/users',
-    name: 'AdminUsers',
-    component: AdminUsers,
+    path: '/admin/clients',
+    name: 'AdminClients',
+    component: AdminClients,
     meta: { requiresAuth: true, requiresAdmin: true },
   },
   {

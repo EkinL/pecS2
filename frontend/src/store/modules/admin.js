@@ -80,7 +80,7 @@ const actions = {
   },
   async fetchUsers({ commit }) {
     const users = await adminService.getUsers()
-    commit('SET_USERS', users.filter((u) => u.role !== 'ROLE_ADMIN'))
+    commit('SET_USERS', users.filter((u) => u.role === 'ROLE_USER'))
   },
   async fetchPayments({ commit }, params) {
     const res = await adminService.getPayments(params)
