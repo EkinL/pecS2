@@ -75,14 +75,8 @@ router.put(
         return res.status(404).json({ error: 'Utilisateur non trouvé' });
       }
 
-      if (u.role === 'ROLE_MERCHANT' || req.role === 'ROLE_ADMIN') {
-        const { companyName, kbis, status, redirect_success, redirect_cancel, currency } = req.body;
-        await u.update({ companyName, kbis, status, redirect_success, redirect_cancel, currency });
-      } else {
-        // ROLE_USER
-        const { firstName, lastName } = req.body;
-        await u.update({ firstName, lastName });
-      }
+      const { firstName, lastName, companyName, kbis, status, redirect_success, redirect_cancel, currency } = req.body;
+      await u.update({ firstName, lastName, companyName, kbis, status, redirect_success, redirect_cancel, currency });
 
       return res.json(u);
     } catch (err) {
