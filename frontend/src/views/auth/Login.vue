@@ -9,28 +9,28 @@
       <form @submit.prevent="handleLogin" class="mt-8 space-y-6">
         <div class="space-y-4">
           <div>
-            <label for="clientId" class="block text-sm font-medium text-gray-700">Client ID</label>
+            <label for="email" class="block text-sm font-medium text-gray-700">Email</label>
             <input
-              id="clientId"
-              v-model="form.clientId"
-              type="text"
+              id="email"
+              v-model="form.email"
+              type="email"
               required
               class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
-              placeholder="CLIENT_ID"
+              placeholder="Email"
             />
           </div>
 
           <div>
-            <label for="clientSecret" class="block text-sm font-medium text-gray-700"
-              >Client Secret</label
+            <label for="password" class="block text-sm font-medium text-gray-700"
+              >Mot de passe</label
             >
             <input
-              id="clientSecret"
-              v-model="form.clientSecret"
+              id="password"
+              v-model="form.password"
               type="password"
               required
               class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
-              placeholder="CLIENT_SECRET"
+              placeholder="Mot de passe"
             />
           </div>
         </div>
@@ -69,8 +69,8 @@ export default {
   data() {
     return {
       form: {
-        clientId: '',
-        clientSecret: '',
+        email: '',
+        password: '',
       },
       loading: false,
     }
