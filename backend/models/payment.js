@@ -3,10 +3,7 @@ const { Model } = require("sequelize");
 const PaymentMongo = require("./payment.mongo");
 
 module.exports = (sequelize, DataTypes) => {
-  class Payment extends Model {
-    // Si besoin, vous pouvez déclarer des associations ici
-    // static associate(models) { ... }
-  }
+  class Payment extends Model {}
 
   Payment.init({
     id: {
@@ -17,7 +14,7 @@ module.exports = (sequelize, DataTypes) => {
     seller_id: {
       type: DataTypes.UUID,
       allowNull: false,
-      references: { model: "Merchants", key: "id" },
+      references: { model: "Users", key: "id" },
       onDelete: "CASCADE",
     },
     buyer_id: {
@@ -50,20 +47,16 @@ module.exports = (sequelize, DataTypes) => {
         is: /^[a-zA-Z0-9_-]+$/,
       },
     },
-    createdAt: {
-      type: DataTypes.DATE,
-      defaultValue: DataTypes.NOW,
-      field: "created_at",
-    },
   }, {
     sequelize,
     modelName: "Payment",
     tableName: "Payments",
     underscored: true,
+    timestamps: true,
   });
 
-  // Réplication dans Mongo après création
-  Payment.addHook("afterCreate", async (payment) => {
+  // Mongo après création
+  Payment.addHook("afterCreate", async payment => {
     await PaymentMongo.create({
       _id:       payment.id,
       seller_id: payment.seller_id,
@@ -75,8 +68,8 @@ module.exports = (sequelize, DataTypes) => {
     });
   });
 
-  // Réplication dans Mongo après modification
-  Payment.addHook("afterUpdate", async (payment) => {
+  // Mongo après update
+  Payment.addHook("afterUpdate", async payment => {
     await PaymentMongo.findByIdAndUpdate(
       payment.id,
       {
@@ -91,8 +84,8 @@ module.exports = (sequelize, DataTypes) => {
     );
   });
 
-  // Suppression dans Mongo après destruction SQL
-  Payment.addHook("afterDestroy", async (payment) => {
+  // Mongo après suppression
+  Payment.addHook("afterDestroy", async payment => {
     await PaymentMongo.findByIdAndDelete(payment.id);
   });
 

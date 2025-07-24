@@ -8,8 +8,6 @@ const allRoutes = require('./routes')
 
 const User = require("./models/user");
 const UserMongo = require("./models/user.mongo");
-const Merchant = require("./models/merchant");
-const MerchantMongo = require("./models/merchant.mongo");
 const Payment = require("./models/payment.mongo");
 const PaymentMongo = require("./models/payment.mongo");
 

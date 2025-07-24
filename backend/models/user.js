@@ -25,8 +25,21 @@ module.exports = (sequelize, DataTypes) => {
     },
     password:       { type: DataTypes.STRING, allowNull: false },
     role:           {
-      type: DataTypes.ENUM("ROLE_USER","ROLE_ADMIN"),
+      type: DataTypes.ENUM("ROLE_USER","ROLE_ADMIN","ROLE_MERCHANT"),
       defaultValue: "ROLE_USER",
+    },
+    // Merchant
+    companyName: {
+      type: DataTypes.STRING,
+      allowNull: true,
+    },
+    kbis: {
+      type: DataTypes.STRING,
+      allowNull: true,
+    },
+    status: {
+      type: DataTypes.ENUM('PENDING','ACTIVE'),
+      allowNull: true,
     },
     app_id:         { type: DataTypes.UUID, allowNull: true, unique: true },
     app_secret:     { type: DataTypes.STRING, allowNull: true },
@@ -49,6 +62,9 @@ module.exports = (sequelize, DataTypes) => {
       _id:           user.id,
       firstName:     user.firstName,
       lastName:      user.lastName,
+      companyName:   user.companyName,
+      kbis:          user.kbis,
+      status:        user.status,
       email:         user.email,
       password:      user.password,
       role:          user.role,
@@ -67,6 +83,9 @@ module.exports = (sequelize, DataTypes) => {
       {
         firstName:     user.firstName,
         lastName:      user.lastName,
+        companyName:   user.companyName,
+        kbis:          user.kbis,
+        status:        user.status,
         email:         user.email,
         password:      user.password,
         role:          user.role,

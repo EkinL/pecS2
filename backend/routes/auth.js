@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const bcrypt = require("bcrypt");
-const { User, Merchant } = require("../models");
+const { User } = require("../models");
 const jwt = require("jsonwebtoken");
 const { JsonWebTokenError } = jwt;
 const authorizeAdmin = require("../middleware/authorizeAdmin");
@@ -23,7 +23,7 @@ router.post("/register", async (req, res) => {
   }
   // Vérif si mail existe
   try {
-    const exists = await (type === 'merchant' ? Merchant.findOne({ where:{ email } }) : User.findOne({ where:{ email } }))
+    const exists =  User.findOne({ where:{ email } });
     if (exists) {
       return res.status(400).json({ error: 'Email déjà utilisé' })
     }
@@ -33,11 +33,9 @@ router.post("/register", async (req, res) => {
   }
   
   try {
+    const hash = await bcrypt.hash(password, 10);
     if (type === 'merchant') {
-
-      const hash = await bcrypt.hash(password, 10);
-
-      const merchant = await Merchant.create({
+      const merchant = await User.create({
         email,
         password:   hash,
         companyName,
@@ -50,9 +48,6 @@ router.post("/register", async (req, res) => {
         role: merchant.role
       });
     } else if( type === 'client') {
-
-      const hash = await bcrypt.hash(password, 10);
-
       const user = await User.create({
         email,
         password: hash,
@@ -82,12 +77,7 @@ router.post('/login', async (req, res) => {
   }
 
   try {
-    // recherche merchant
-    let user = await Merchant.findOne({ where:{ email } })
-    if (user && await bcrypt.compare(password, user.password)) {
-      return _issueTokens(user, res);
-    }
-
+    let user
     // recherche client
     user = await User.findOne({ where:{ email } })
     if (user && await bcrypt.compare(password, user.password)) {
@@ -108,8 +98,7 @@ router.post("/refresh", async (req, res) => {
   }
   try {
     const { userId } = jwt.verify(refreshToken, JWT_REFRESH_SECRET);
-    let user = await Merchant.findByPk(userId);
-    if (!user) user = await User.findByPk(userId);
+    let user = await User.findByPk(userId);
     if (!user || !user.refreshTokens.includes(refreshToken)) {
       throw new Error("Token non reconnu");
     }
@@ -132,8 +121,7 @@ router.post("/refresh", async (req, res) => {
 
 router.get('/me', authenticateToken, async (req, res) => {
   try {
-    let user = await Merchant.findByPk(req.userId);
-    if (!user) user = await User.findByPk(req.userId);
+    let user = await User.findByPk(req.userId);
     if (!user) return res.status(404).json({ error: 'Utilisateur non trouvé' });
 
     const data = user.toJSON();
@@ -149,7 +137,7 @@ router.get('/me', authenticateToken, async (req, res) => {
 router.get('/activate', authorizeAdmin, async (req,res) => {
   try {
     const { merchantId } = jwt.verify(req.query.token, process.env.JWT_SECRET);
-    const merchant = await Merchant.findByPk(merchantId);
+    const merchant = await User.findByPk(merchantId);
     if (!merchant) return res.status(404).send('Compte non trouvé');
     await merchant.update({ status:'ACTIVE' });
     res.send('Compte activé !');

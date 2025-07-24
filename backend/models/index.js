@@ -1,39 +1,32 @@
 const { Sequelize, DataTypes } = require('sequelize');
-const sequelize = require("../sequelize"); // ← notre unique source de vérité
+const sequelize = require("../sequelize");
 
 const db = {};
 db.Sequelize = Sequelize;
 db.sequelize = sequelize;
 
-// Tables
-db.User    = require("./user")(sequelize, Sequelize.DataTypes);
-db.Payment = require("./payment")(sequelize, Sequelize.DataTypes);
-db.Merchant = require("./merchant")(sequelize, Sequelize.DataTypes);
+// Models
+db.User    = require("./user")(sequelize, DataTypes);
+db.Payment = require("./payment")(sequelize, DataTypes);
 
-// Relations
-db.Merchant.hasMany(db.Payment, {
-  as:         'soldPayments',
-  foreignKey: 'seller_id',
-  onDelete:   'CASCADE',
-});
-
-// Un User (buyer) fait plusieurs achats
+// relation
 db.User.hasMany(db.Payment, {
-  as:         'purchasedPayments',
+  as: 'purchasedPayments',
   foreignKey: 'buyer_id',
-  onDelete:   'CASCADE',
+  onDelete: 'CASCADE',
 });
-
-// Chaque paiement appartient à un Merchant (seller)
-db.Payment.belongsTo(db.Merchant, {
-  as:         'seller',
+db.User.hasMany(db.Payment, {
+  as: 'soldPayments',
   foreignKey: 'seller_id',
+  onDelete: 'CASCADE',
 });
-
-// … et à un User (buyer)
 db.Payment.belongsTo(db.User, {
-  as:         'buyer',
+  as: 'buyer',
   foreignKey: 'buyer_id',
+});
+db.Payment.belongsTo(db.User, {
+  as: 'seller',
+  foreignKey: 'seller_id',
 });
 
 module.exports = db;
