@@ -131,6 +131,34 @@ const actions = {
     }
   },
 
+  async refundPayment({ commit, dispatch }, paymentId) {
+    try {
+      const res = await paymentService.refundPayment(paymentId)
+      commit('UPDATE_PAYMENT', res.data)
+
+      dispatch(
+        'ui/showToast',
+        {
+          type: 'success',
+          message: 'Paiement remboursé',
+        },
+        { root: true },
+      )
+
+      return res
+    } catch (error) {
+      dispatch(
+        'ui/showToast',
+        {
+          type: 'error',
+          message: 'Erreur lors du remboursement',
+        },
+        { root: true },
+      )
+      throw error
+    }
+  },
+
   async deletePayment({ commit, dispatch }, paymentId) {
     try {
       await paymentService.deletePayment(paymentId)

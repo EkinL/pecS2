@@ -10,7 +10,7 @@ const paymentSchema = new mongoose.Schema({
     buyer_id:  { type: String, required: true },
     amount:    { type: Number, required: true },
     currency:  { type: String, enum: ['EUR','USD','GBP','JPY'], default: "EUR" },
-    status:    { type: String, enum: ["PENDING","SUCCESS","FAILED"], default: "PENDING" },
+    status:    { type: String, enum: ["PENDING","SUCCESS","FAILED","REFUNDED"], default: "PENDING" },
     stripe_id: { type: String, unique: true, required: true, match: /^[a-zA-Z0-9_-]+$/ },
 }, {
     timestamps: true

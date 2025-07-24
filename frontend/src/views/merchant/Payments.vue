@@ -67,18 +67,12 @@
                       </span>
                     </td>
                     <td class="px-6 py-4 whitespace-nowrap text-sm font-medium space-x-2">
-                      <button 
-                        v-if="payment.status !== 'SUCCESS'"
-                        @click="updateStatus(payment.id, 'SUCCESS')"
-                        class="text-green-600 hover:text-green-900 transition-colors"
+                      <button
+                        v-if="payment.status === 'SUCCESS'"
+                        @click="refund(payment.id)"
+                        class="text-indigo-600 hover:text-indigo-900 transition-colors"
                       >
-                        Valider
-                      </button>
-                      <button 
-                        @click="confirmDelete(payment.id)"
-                        class="text-red-600 hover:text-red-900 transition-colors"
-                      >
-                        Supprimer
+                        Rembourser
                       </button>
                     </td>
                   </tr>
@@ -129,14 +123,9 @@ export default {
     sseService.close()
   },
   methods: {
-    ...mapActions('payments', ['fetchPayments', 'updatePayment', 'deletePayment']),
-    async updateStatus(paymentId, status) {
-      await this.updatePayment({ paymentId, data: { status } })
-    },
-    async confirmDelete(paymentId) {
-      if (confirm('Êtes-vous sûr de vouloir supprimer ce paiement ?')) {
-        await this.deletePayment(paymentId)
-      }
+    ...mapActions('payments', ['fetchPayments', 'refundPayment']),
+    async refund(paymentId) {
+      await this.refundPayment(paymentId)
     },
     handlePaymentCreated() {
       this.showCreateModal = false
@@ -150,6 +139,8 @@ export default {
           return 'bg-yellow-100 text-yellow-800'
         case 'FAILED':
           return 'bg-red-100 text-red-800'
+        case 'REFUNDED':
+          return 'bg-gray-200 text-gray-800'
         default:
           return 'bg-gray-100 text-gray-800'
       }

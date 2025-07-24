@@ -197,6 +197,48 @@ router.put(
 );
 
 /**
+ * POST /payments/:id/refund
+ * Permet au marchand de rembourser un paiement
+ */
+router.post(
+  '/:id/refund',
+  authenticateToken,
+  async (req, res) => {
+    const { id } = req.params;
+    const { role, userId } = req;
+
+    if (![MERCHANT, ADMIN].includes(role)) {
+      return res.status(403).json({ error: 'Accès refusé' });
+    }
+
+    const status = 'REFUNDED';
+
+    try {
+      const p = await Payment.findByPk(id);
+      if (p && (role === ADMIN || p.seller_id === userId)) {
+        await p.update({ status });
+        return res.json(p);
+      }
+    } catch {}
+
+    try {
+      const filter = { _id: id, ...(role === MERCHANT ? { seller_id: userId } : {}) };
+      const pMongo = await PaymentMongo.findOneAndUpdate(
+        filter,
+        { status },
+        { new: true, runValidators: true }
+      ).exec();
+      if (!pMongo) {
+        return res.status(404).json({ error: 'Paiement non trouvé ou accès refusé' });
+      }
+      return res.json(pMongo);
+    } catch (mErr) {
+      return res.status(400).json({ error: 'ID invalide', detail: mErr.message });
+    }
+  }
+);
+
+/**
  * DELETE /payments/:id
  * Seul l’admin peut supprimer
  */
