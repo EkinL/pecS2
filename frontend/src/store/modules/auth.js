@@ -170,10 +170,7 @@ const actions = {
     )
   },
 
-  async checkAuthStatus({ commit, dispatch, state }) {
-    if (state.impersonatorData) {
-      commit('STOP_IMPERSONATION')
-    }
+  async checkAuthStatus({ commit, dispatch }) {
 
     const token = localStorage.getItem('token')
     const refreshToken = localStorage.getItem('refreshToken')
