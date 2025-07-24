@@ -19,7 +19,13 @@
             <td class="px-6 py-4 whitespace-nowrap">{{ u.email }}</td>
             <td class="px-6 py-4 whitespace-nowrap">{{ roleLabel(u.role) }}</td>
             <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
-              <button @click="impersonate(u.id)" class="text-indigo-600 hover:text-indigo-900">Se connecter en tant que</button>
+              <button
+                v-if="u.role !== 'ROLE_ADMIN'"
+                @click="impersonate(u.id)"
+                class="text-indigo-600 hover:text-indigo-900"
+              >
+                Se connecter en tant que
+              </button>
             </td>
           </tr>
         </tbody>

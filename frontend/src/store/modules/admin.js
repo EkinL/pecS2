@@ -41,16 +41,32 @@ const actions = {
   async impersonateMerchant({ dispatch }, id) {
     await dispatch('impersonateUser', id)
   },
-  async impersonateUser({ commit }, id) {
-    const res = await adminService.impersonate(id)
-    const { accessToken, refreshToken, user } = res.data
-    localStorage.setItem('token', accessToken)
-    localStorage.setItem('refreshToken', refreshToken)
-    commit('auth/START_IMPERSONATION', { user, token: accessToken, refreshToken }, { root: true })
+  async impersonateUser({ commit, dispatch }, id) {
+    try {
+      const res = await adminService.impersonate(id)
+      const { accessToken, refreshToken, user } = res.data
+      localStorage.setItem('token', accessToken)
+      localStorage.setItem('refreshToken', refreshToken)
+      commit(
+        'auth/START_IMPERSONATION',
+        { user, token: accessToken, refreshToken },
+        { root: true }
+      )
+    } catch (error) {
+      dispatch(
+        'ui/showToast',
+        {
+          type: 'error',
+          message: error.response?.data?.error || 'Impersonation impossible',
+        },
+        { root: true }
+      )
+      throw error
+    }
   },
   async fetchUsers({ commit }) {
     const users = await adminService.getUsers()
-    commit('SET_USERS', users)
+    commit('SET_USERS', users.filter((u) => u.role !== 'ROLE_ADMIN'))
   },
   async fetchPayments({ commit }, params) {
     const res = await adminService.getPayments(params)

@@ -140,6 +140,9 @@ router.post('/impersonate/:id', authenticateToken, authorizeAdmin, async (req, r
   try {
     const user = await User.findByPk(req.params.id)
     if (!user) return res.status(404).json({ error: 'Utilisateur non trouvé' })
+    if (user.role === 'ROLE_ADMIN') {
+      return res.status(403).json({ error: "Impossible d'impersonate un admin" })
+    }
     return _issueTokens(user, res)
   } catch (err) {
     console.error('[auth][impersonate]', err)
