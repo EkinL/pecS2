@@ -117,6 +117,8 @@ router.beforeEach(async (to, from, next) => {
     next('/dashboard')
   } else if (to.meta.requiresAdmin && userRole !== 'ROLE_ADMIN') {
     next('/dashboard')
+  } else if (to.name === 'Dashboard' && userRole === 'ROLE_ADMIN') {
+    next('/admin')
   } else {
     next()
   }

@@ -1,8 +1,9 @@
-import apiClient from '../services/apiClient'
+import apiClient from './apiClient'
 
 export default {
-  getMerchants() {
-    return apiClient.get('/merchants')
+  async getMerchants() {
+    const res = await apiClient.get('/users')
+    return res.data.filter((u) => u.role === 'ROLE_MERCHANT')
   },
   approveMerchant(id) {
     return apiClient.put(`/merchants/${id}`, { approved: true })
@@ -12,5 +13,8 @@ export default {
   },
   getPayments(params) {
     return apiClient.get('/payments', { params })
+  },
+  getStats() {
+    return apiClient.get('/admin/stats')
   },
 }

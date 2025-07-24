@@ -60,7 +60,7 @@
               to="/admin"
               class="border-b-2 py-4 px-1 text-sm font-medium transition-colors"
               :class="
-                $route.name.startsWith('Admin')
+                ($route.name || '').startsWith('Admin')
                   ? 'border-indigo-500 text-gray-900'
                   : 'border-transparent text-gray-500 hover:text-gray-700'
               "

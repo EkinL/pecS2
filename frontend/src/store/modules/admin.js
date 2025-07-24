@@ -3,11 +3,13 @@ import adminService from '../../services/adminService'
 const state = {
   merchants: [],
   payments: [],
+  stats: {},
 }
 
 const getters = {
   merchants: (state) => state.merchants,
   payments: (state) => state.payments,
+  stats: (state) => state.stats,
 }
 
 const mutations = {
@@ -17,12 +19,15 @@ const mutations = {
   SET_PAYMENTS(state, payments) {
     state.payments = payments
   },
+  SET_STATS(state, stats) {
+    state.stats = stats
+  },
 }
 
 const actions = {
   async fetchMerchants({ commit }) {
-    const res = await adminService.getMerchants()
-    commit('SET_MERCHANTS', res.data)
+    const merchants = await adminService.getMerchants()
+    commit('SET_MERCHANTS', merchants)
   },
   async approveMerchant({ dispatch }, id) {
     await adminService.approveMerchant(id)
@@ -38,6 +43,10 @@ const actions = {
   async fetchPayments({ commit }, params) {
     const res = await adminService.getPayments(params)
     commit('SET_PAYMENTS', res.data)
+  },
+  async fetchStats({ commit }) {
+    const res = await adminService.getStats()
+    commit('SET_STATS', res.data)
   },
 }
 
