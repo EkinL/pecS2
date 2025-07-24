@@ -18,7 +18,6 @@ import Dashboard from '../views/Dashboard.vue'
 import Payments from '../views/merchant/Payments.vue'
 import Profile from '../views/Profile.vue'
 import ClientHistory from '../views/client/History.vue'
-import AdminDashboard from '../views/admin/AdminDashboard.vue'
 import AdminMerchants from '../views/admin/AdminMerchants.vue'
 import AdminTransactions from '../views/admin/AdminTransactions.vue'
 
@@ -62,12 +61,6 @@ const routes = [
     name: 'Profile',
     component: Profile,
     meta: { requiresAuth: true },
-  },
-  {
-    path: '/admin',
-    name: 'AdminDashboard',
-    component: AdminDashboard,
-    meta: { requiresAuth: true, requiresAdmin: true },
   },
   {
     path: '/admin/merchants',
@@ -117,8 +110,6 @@ router.beforeEach(async (to, from, next) => {
     next('/dashboard')
   } else if (to.meta.requiresAdmin && userRole !== 'ROLE_ADMIN') {
     next('/dashboard')
-  } else if (to.name === 'Dashboard' && userRole === 'ROLE_ADMIN') {
-    next('/admin')
   } else {
     next()
   }

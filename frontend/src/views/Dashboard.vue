@@ -3,15 +3,29 @@
     <div class="px-4 py-6 sm:px-0">
       <div class="mb-8">
         <h1 class="text-2xl font-bold text-gray-900">
-          {{ isMerchant ? 'Dashboard Marchand' : 'Dashboard Client' }}
+          {{ dashboardTitle }}
         </h1>
         <p class="mt-1 text-sm text-gray-600">
           Bienvenue {{ user.firstName }}, voici un aperçu de votre activité
         </p>
       </div>
       
+      <!-- Admin Dashboard -->
+      <div v-if="isAdmin">
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-6">
+          <StatsCard title="Comptes marchands" :value="stats.totalMerchants ?? 0" icon="Users" color="purple" />
+          <StatsCard title="Comptes clients" :value="stats.totalClients ?? 0" icon="Users" color="green" />
+          <StatsCard title="Transactions" :value="stats.totalTransactions ?? 0" icon="CreditCard" color="blue" />
+          <StatsCard title="Revenus" :value="`${stats.totalAmount?.toFixed(2) || 0}€`" icon="DollarSign" color="yellow" />
+        </div>
+
+        <div class="mt-8">
+          <BarChart :data="chartData" :labels="['Marchands','Clients','Transactions']" />
+        </div>
+      </div>
+
       <!-- Merchant Dashboard -->
-      <div v-if="isMerchant" class="grid grid-cols-1 md:grid-cols-3 gap-6">
+      <div v-else-if="isMerchant" class="grid grid-cols-1 md:grid-cols-3 gap-6">
         <StatsCard
           title="Paiements totaux"
           :value="payments.length"
@@ -92,25 +106,44 @@
 import { mapGetters, mapActions } from 'vuex'
 import { CreditCard } from 'lucide-vue-next'
 import StatsCard from '../components/common/StatsCard.vue'
+import BarChart from '../components/common/BarChart.vue'
 
 export default {
   name: 'Dashboard',
   components: {
     CreditCard,
-    StatsCard
+    StatsCard,
+    BarChart
   },
   computed: {
-    ...mapGetters('auth', ['user', 'isMerchant']),
+    ...mapGetters('auth', ['user', 'isMerchant', 'isAdmin']),
     ...mapGetters('payments', ['payments', 'totalAmount', 'successfulPayments']),
+    ...mapGetters('admin', { adminPayments: 'payments', stats: 'stats' }),
+    dashboardTitle() {
+      if (this.isAdmin) return 'Dashboard Admin'
+      return this.isMerchant ? 'Dashboard Marchand' : 'Dashboard Client'
+    },
+    chartData() {
+      return [
+        this.stats.totalMerchants || 0,
+        this.stats.totalClients || 0,
+        this.stats.totalTransactions || 0,
+      ]
+    },
     recentPayments() {
-      return this.payments.slice(0, 5)
+      const list = this.isAdmin ? this.adminPayments : this.payments
+      return list.slice(0, 5)
     }
   },
   async created() {
     await this.fetchPayments()
+    if (this.isAdmin) {
+      await Promise.all([this.fetchStats(), this.fetchAdminPayments()])
+    }
   },
   methods: {
     ...mapActions('payments', ['fetchPayments']),
+    ...mapActions('admin', { fetchAdminPayments: 'fetchPayments', fetchStats: 'fetchStats' }),
     getStatusClass(status) {
       switch (status) {
         case 'SUCCESS':
