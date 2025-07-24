@@ -73,8 +73,16 @@ router.put(
         return res.status(404).json({ error: 'Utilisateur non trouvé' });
       }
 
-      const { firstName, lastName, companyName, kbis, status, redirect_success, redirect_cancel, currency } = req.body;
-      await u.update({ firstName, lastName, companyName, kbis, status, redirect_success, redirect_cancel, currency });
+      const { firstName, lastName, email, companyName, kbis, status, redirect_success, redirect_cancel, currency } = req.body;
+
+      if (email && email !== u.email) {
+        const exists = await User.findOne({ where: { email } });
+        if (exists && exists.id !== u.id) {
+          return res.status(400).json({ error: 'Email déjà utilisé' });
+        }
+      }
+
+      await u.update({ firstName, lastName, email, companyName, kbis, status, redirect_success, redirect_cancel, currency });
 
       return res.json(u);
     } catch (err) {
