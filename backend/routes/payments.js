@@ -77,28 +77,25 @@ router.get(
  * POST /payments
  * Seul le marchand (ou admin) peut créer
  */
-router.post(
-  '/',
-  authenticateToken,
-  valideCard,
+router.post('/', authenticateToken, authorizePaymentAccess, valideCard,
   async (req, res) => {
-    const { role, userId } = req;
-    if (![MERCHANT, ADMIN].includes(role)) {
-      return res.status(403).json({ error: 'Accès refusé' });
-    }
+    const { role, userId, body } = req;
 
-    const { buyer_id, amount, currency, stripe_id } = req.body;
+    // if (![MERCHANT, ADMIN].includes(role)) {
+    //   return res.status(403).json({ error: 'Accès refusé' });
+    // }
+
+    const { seller_id, buyer_id, amount, currency, stripe_id } = body;
     if (!buyer_id || amount == null || !currency || !stripe_id) {
       return res.status(400).json({ error: 'Tous les champs sont requis' });
     }
 
-    const payload = { seller_id: userId, buyer_id, amount, currency, stripe_id };
-
     try {
-      const p = await Payment.create(payload);
+      const p = await Payment.create({ seller_id, buyer_id, amount, currency, stripe_id });
       return res.status(201).json(p);
     } catch (err) {
-      const isUUIDError = err.name === 'SequelizeDatabaseError' && err.parent?.code === '22P02';
+      const isUUIDError = err.name === 'SequelizeDatabaseError'
+                       && err.parent?.code === '22P02';
       if (!isUUIDError) {
         console.error('❌ [PAYMENTS POST] SQL Error:', err);
         return res.status(500).json({ error: 'Erreur SQL', detail: err.message });
@@ -107,7 +104,7 @@ router.post(
     }
 
     try {
-      const pMongo = await PaymentMongo.create(payload);
+      const pMongo = await PaymentMongo.create({ seller_id, buyer_id, amount, currency, stripe_id });
       return res.status(201).json(pMongo);
     } catch (mErr) {
       console.error('❌ [PAYMENTS POST] Mongo Error:', mErr);
