@@ -6,23 +6,7 @@
           <h1 class="text-xl font-semibold text-gray-900">Gestion des paiements</h1>
           <p class="mt-2 text-sm text-gray-700">Liste de tous vos paiements et transactions.</p>
         </div>
-        <div class="mt-4 sm:mt-0 sm:ml-16 sm:flex-none">
-          <button 
-            @click="showCreateModal = true" 
-            class="inline-flex items-center justify-center rounded-md border border-transparent bg-indigo-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 transition-colors"
-          >
-            <Plus class="h-4 w-4 mr-2" />
-            Nouveau paiement
-          </button>
-        </div>
       </div>
-
-      <!-- Create Payment Modal -->
-      <CreatePaymentModal 
-        v-if="showCreateModal"
-        @close="showCreateModal = false"
-        @created="handlePaymentCreated"
-      />
 
       <!-- Payments Table -->
       <div class="mt-8 flex flex-col">
@@ -95,20 +79,16 @@
 
 <script>
 import { mapGetters, mapActions } from 'vuex'
-import { Plus, CreditCard } from 'lucide-vue-next'
-import CreatePaymentModal from '../../components/modals/CreatePaymentModal.vue'
+import { CreditCard } from 'lucide-vue-next'
 import sseService from '../../services/sseService'
 
 export default {
   name: 'Payments',
   components: {
-    Plus,
-    CreditCard,
-    CreatePaymentModal
+    CreditCard
   },
   data() {
     return {
-      showCreateModal: false,
       sse: null
     }
   },
@@ -126,10 +106,6 @@ export default {
     ...mapActions('payments', ['fetchPayments', 'refundPayment']),
     async refund(paymentId) {
       await this.refundPayment(paymentId)
-    },
-    handlePaymentCreated() {
-      this.showCreateModal = false
-      this.fetchPayments()
     },
     getStatusClass(status) {
       switch (status) {
