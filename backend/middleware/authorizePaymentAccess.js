@@ -74,3 +74,6 @@ async function authorizePaymentAccess(req, res, next) {
 }
 
 module.exports = authorizePaymentAccess;
+module.exports.ADMIN = ADMIN;
+module.exports.MERCHANT = MERCHANT;
+module.exports.USER = USER;
