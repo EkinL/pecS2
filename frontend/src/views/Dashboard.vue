@@ -56,7 +56,7 @@
             <p class="mt-1 max-w-2xl text-sm text-gray-500">Vos dernières transactions</p>
           </div>
           <ul class="divide-y divide-gray-200">
-            <li v-for="payment in recentPayments" :key="payment._id" class="px-4 py-4 sm:px-6">
+            <li v-for="payment in recentPayments" :key="payment.id" class="px-4 py-4 sm:px-6">
               <div class="flex items-center justify-between">
                 <div class="flex items-center">
                   <div class="flex-shrink-0">

@@ -198,7 +198,7 @@ export default {
     async handleGenerateCredentials() {
       this.credentialsLoading = true
       try {
-        const response = await authService.generateCredentials(this.user._id)
+        const response = await authService.generateCredentials(this.user.id)
         this.credentials = JSON.stringify(response.data, null, 2)
 
         this.showToast({
@@ -232,7 +232,7 @@ export default {
       this.profileLoading = true
       try {
         await this.updateProfile({
-          id: this.user._id,
+          id: this.user.id,
           firstName: this.profileForm.firstName,
           lastName: this.profileForm.lastName,
           email: this.profileForm.email,

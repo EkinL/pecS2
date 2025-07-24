@@ -32,8 +32,8 @@
           </tr>
         </thead>
         <tbody class="bg-white divide-y divide-gray-200">
-          <tr v-for="p in payments" :key="p._id">
-            <td class="px-6 py-4 whitespace-nowrap">{{ p._id.slice(-8) }}</td>
+          <tr v-for="p in payments" :key="p.id">
+            <td class="px-6 py-4 whitespace-nowrap">{{ p.id.slice(-8) }}</td>
             <td class="px-6 py-4 whitespace-nowrap">{{ p.amount }}{{ p.currency }}</td>
             <td class="px-6 py-4 whitespace-nowrap">{{ p.status }}</td>
           </tr>

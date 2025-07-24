@@ -50,9 +50,9 @@
                   </tr>
                 </thead>
                 <tbody class="bg-white divide-y divide-gray-200">
-                  <tr v-for="payment in payments" :key="payment._id" class="hover:bg-gray-50">
+                  <tr v-for="payment in payments" :key="payment.id" class="hover:bg-gray-50">
                     <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-                      {{ payment._id.slice(-8) }}
+                      {{ payment.id.slice(-8) }}
                     </td>
                     <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
                       {{ payment.buyer_id.slice(-8) }}
@@ -69,13 +69,13 @@
                     <td class="px-6 py-4 whitespace-nowrap text-sm font-medium space-x-2">
                       <button 
                         v-if="payment.status !== 'SUCCESS'"
-                        @click="updateStatus(payment._id, 'SUCCESS')" 
+                        @click="updateStatus(payment.id, 'SUCCESS')"
                         class="text-green-600 hover:text-green-900 transition-colors"
                       >
                         Valider
                       </button>
                       <button 
-                        @click="confirmDelete(payment._id)" 
+                        @click="confirmDelete(payment.id)"
                         class="text-red-600 hover:text-red-900 transition-colors"
                       >
                         Supprimer

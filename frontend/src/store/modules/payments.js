@@ -21,13 +21,13 @@ const mutations = {
     state.payments.unshift(payment)
   },
   UPDATE_PAYMENT(state, updatedPayment) {
-    const index = state.payments.findIndex((p) => p._id === updatedPayment._id)
+    const index = state.payments.findIndex((p) => p.id === updatedPayment.id)
     if (index !== -1) {
       state.payments.splice(index, 1, updatedPayment)
     }
   },
   REMOVE_PAYMENT(state, paymentId) {
-    state.payments = state.payments.filter((p) => p._id !== paymentId)
+    state.payments = state.payments.filter((p) => p.id !== paymentId)
   },
   SET_LOADING(state, loading) {
     state.loading = loading
@@ -39,7 +39,7 @@ const actions = {
     commit("SET_LOADING", true)
     try {
       const response = await paymentService.getPayments()
-      const userId = rootGetters["auth/user"]._id
+      const userId = rootGetters["auth/user"].id
       const userRole = rootGetters["auth/userRole"]
 
       let filteredPayments = response.data
@@ -66,7 +66,7 @@ const actions = {
 
   async createPayment({ commit, rootGetters, dispatch }, paymentData) {
     try {
-      const sellerId = rootGetters["auth/user"]._id
+      const sellerId = rootGetters["auth/user"].id
       const response = await paymentService.createPayment({
         ...paymentData,
         seller_id: sellerId,
