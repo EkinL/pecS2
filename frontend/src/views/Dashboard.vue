@@ -107,6 +107,7 @@ import { mapGetters, mapActions } from 'vuex'
 import { CreditCard } from 'lucide-vue-next'
 import StatsCard from '../components/common/StatsCard.vue'
 import BarChart from '../components/common/BarChart.vue'
+import statsSseService from '../services/statsSseService'
 
 export default {
   name: 'Dashboard',
@@ -139,7 +140,11 @@ export default {
     await this.fetchPayments()
     if (this.isAdmin) {
       await Promise.all([this.fetchStats(), this.fetchAdminPayments()])
+      statsSseService.connect()
     }
+  },
+  beforeUnmount() {
+    if (this.isAdmin) statsSseService.close()
   },
   methods: {
     ...mapActions('payments', ['fetchPayments']),

@@ -6,6 +6,7 @@ const jwt = require("jsonwebtoken");
 const { JsonWebTokenError } = jwt;
 const authorizeAdmin = require("../middleware/authorizeAdmin");
 const authenticateToken = require("../middleware/auth");
+const { broadcastStats, computeStats } = require('../sse');
 
 const { JWT_SECRET, JWT_REFRESH_SECRET } = process.env;
 
@@ -45,6 +46,8 @@ router.post("/register", async (req, res) => {
         role: 'ROLE_MERCHANT'
       });
 
+      const stats = await computeStats();
+      broadcastStats(stats);
       return res.status(201).json({
         id: merchant.id,
         role: merchant.role
@@ -58,6 +61,8 @@ router.post("/register", async (req, res) => {
         role: 'ROLE_USER',
       });
 
+      const stats = await computeStats();
+      broadcastStats(stats);
       return res.status(201).json({
         id: user.id,
         role: user.role

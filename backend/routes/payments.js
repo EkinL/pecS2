@@ -7,7 +7,7 @@ const authenticateToken      = require('../middleware/auth');
 const authorizePaymentAccess = require('../middleware/authorizePaymentAccess');
 const valideCard             = require('../middleware/valideCard');
 const axios                  = require('axios');
-const { broadcastPayment }   = require('../sse');
+const { broadcastPayment, broadcastStats, computeStats }   = require('../sse');
 
 const {
   ADMIN,
@@ -24,6 +24,8 @@ function triggerPsp(id) {
         status: 'SUCCESS'
       });
       broadcastPayment({ id: data.id || id, status: data.status || 'SUCCESS' });
+      const stats = await computeStats();
+      broadcastStats(stats);
     } catch (err) {
       console.error('[SSE] PSP call failed', err.message);
     }
@@ -110,6 +112,8 @@ router.post('/', authenticateToken, authorizePaymentAccess, valideCard,
     try {
       const p = await Payment.create({ seller_id, buyer_id, amount, currency, stripe_id });
       triggerPsp(p.id);
+      const stats = await computeStats();
+      broadcastStats(stats);
       return res.status(201).json(p);
     } catch (err) {
       const isUUIDError = err.name === 'SequelizeDatabaseError' && err.parent?.code === '22P02';
@@ -123,6 +127,8 @@ router.post('/', authenticateToken, authorizePaymentAccess, valideCard,
     try {
       const pMongo = await PaymentMongo.create({ seller_id, buyer_id, amount, currency, stripe_id });
       triggerPsp(pMongo.id);
+      const stats = await computeStats();
+      broadcastStats(stats);
       return res.status(201).json(pMongo);
     } catch (mErr) {
       console.error('❌ [PAYMENTS POST] Mongo Error:', mErr);
@@ -221,6 +227,8 @@ router.post(
       const p = await Payment.findByPk(id);
       if (p) {
         await p.update({ status });
+        const stats = await computeStats();
+        broadcastStats(stats);
         return res.json(p);
       }
     } catch (err) {
@@ -234,6 +242,8 @@ router.post(
         { new: true, runValidators: true }
       ).exec();
       if (pMongo) {
+        const stats = await computeStats();
+        broadcastStats(stats);
         return res.json(pMongo);
       }
     } catch (err) {
