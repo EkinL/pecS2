@@ -24,6 +24,11 @@ const mutations = {
     state.isAuthenticated = true
     localStorage.setItem('user', JSON.stringify(user))
   },
+  SET_TOKENS(state, { token, refreshToken }) {
+    state.token = token
+    state.refreshToken = refreshToken
+    state.isAuthenticated = true
+  },
   CLEAR_AUTH_DATA(state) {
     state.user = null
     state.token = null
@@ -46,15 +51,11 @@ const actions = {
       // Stockage des tokens
       localStorage.setItem('token', accessToken)
       localStorage.setItem('refreshToken', refreshToken)
+      commit('SET_TOKENS', { token: accessToken, refreshToken })
 
       // Récupération du profil complet
       const me = await authService.getCurrentUser()
-
-      commit('SET_AUTH_DATA', {
-        user: me.data,
-        token: accessToken,
-        refreshToken,
-      })
+      commit('SET_USER', me.data)
 
       dispatch(
         'ui/showToast',
