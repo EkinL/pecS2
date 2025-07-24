@@ -36,6 +36,8 @@ router.post("/register", async (req, res) => {
     const hash = await bcrypt.hash(password, 10);
     if (type === 'merchant') {
       const merchant = await User.create({
+        firstName,
+        lastName,
         email,
         password:   hash,
         companyName,
