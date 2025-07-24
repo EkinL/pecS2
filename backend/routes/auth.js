@@ -23,7 +23,7 @@ router.post("/register", async (req, res) => {
   }
   // Vérif si mail existe
   try {
-    const exists =  User.findOne({ where:{ email } });
+    const exists = await User.findOne({ where:{ email } });
     if (exists) {
       return res.status(400).json({ error: 'Email déjà utilisé' })
     }

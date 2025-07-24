@@ -1,8 +1,8 @@
 const mongoose = require('mongoose');
 const schema = new mongoose.Schema({
   _id:            { type: String },
-  firstName:      { type: String, required: true },
-  lastName:       { type: String, required: true },
+  firstName:      { type: String, required: false },
+  lastName:       { type: String, required: false },
   email:          { type: String, unique: true, required: true, lowercase: true },
   password:       { type: String, required: true },
   role:           { type: String, enum: ['ROLE_USER','ROLE_ADMIN','ROLE_MERCHANT'], default: 'ROLE_USER' },
