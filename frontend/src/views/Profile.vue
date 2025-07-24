@@ -9,12 +9,6 @@
               Détails personnels et informations de l'application.
             </p>
           </div>
-          <button
-            @click="toggleEditProfile"
-            class="text-sm text-indigo-600 hover:text-indigo-500 transition-colors"
-          >
-            {{ editingProfile ? 'Annuler' : 'Modifier' }}
-          </button>
         </div>
         <div class="border-t border-gray-200">
           <dl>
