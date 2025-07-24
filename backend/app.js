@@ -3,10 +3,8 @@ const express = require("express");
 const cors = require("cors");
 const mongoose = require("mongoose");
 
-const SSE     = require('./middleware/sse')
 const sequelize = require('./sequelize');
 const allRoutes = require('./routes')
-const sseRouter= require('./routes/sse');
 
 const User = require("./models/user");
 const UserMongo = require("./models/user.mongo");
@@ -18,9 +16,7 @@ const app = express();
 
 app.use(cors());
 app.use(express.json());
-app.set('sse', SSE);
 
-app.use('/sse/payments', sseRouter);
 app.use('/', allRoutes)
 
 mongoose.connect(process.env.MONGO_URI, {

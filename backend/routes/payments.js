@@ -202,11 +202,10 @@ router.post(
       const p = await Payment.findByPk(id);
       if (p) {
         await p.update({ status });
-        req.app.get('sse').broadcast({ id, status });
         return res.json(p);
       }
-    } catch (e) {
-      console.warn('[WEBHOOK PSP] SQL error, fallback Mongo', e);
+    } catch (err) {
+      console.warn('[WEBHOOK PSP] SQL error, fallback Mongo', err);
     }
 
     try {
@@ -215,9 +214,7 @@ router.post(
         { status },
         { new: true, runValidators: true }
       ).exec();
-
       if (pMongo) {
-        req.app.get('sse').broadcast({ id, status });
         return res.json(pMongo);
       }
     } catch (err) {
@@ -228,26 +225,5 @@ router.post(
     return res.status(404).json({ error: 'Paiement non trouvé' });
   }
 );
-
-router.get(
-  '/stream',
-  authenticateToken,
-  (req, res) => {
-    // initialise le SSE
-    res.writeHead(200, {
-      'Content-Type': 'text/event-stream',
-      'Cache-Control': 'no-cache',
-      Connection: 'keep-alive'
-    });
-    // enregistre ce client
-    const clientId = req.userId;
-    req.app.get('sse').register(clientId, res);
-    // nettoyage à la déconnexion
-    req.on('close', () => {
-      req.app.get('sse').unregister(clientId);
-    });
-  }
-);
-
 
 module.exports = router;
