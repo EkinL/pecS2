@@ -25,20 +25,23 @@ async function main() {
   ]);
   console.log('✅ MongoDB vidé');
 
+  // --- Hash du mot de passe ---
+  const plainPassword = 'secret';
+  const hashedPassword = await bcrypt.hash(plainPassword, 10);
+
   // --- Création de deux marchands ---
   console.log('🔄 Création des marchands…');
-  const pwd = 'secret';
   const [m1, m2] = await Promise.all([
-    Merchant.create({type: "merchant", email: 'alex@gmail.com', password: pwd, companyName: 'ACME Corp', kbis: 'KBIS001' }),
-    Merchant.create({type: "merchant", email: 'lilian@gmail.com', password: pwd, companyName: 'Globex Inc', kbis: 'KBIS002' }),
+    Merchant.create({type: "merchant", email: 'alex@gmail.com', password: hashedPassword, companyName: 'ACME Corp', kbis: 'KBIS001' }),
+    Merchant.create({type: "merchant", email: 'lilian@gmail.com', password: hashedPassword, companyName: 'Globex Inc', kbis: 'KBIS002' }),
   ]);
 
-  // --- Création de deux utilisateurs “clients” ---
+  // --- Création de trois utilisateurs “clients” ---
   console.log('🔄 Création des clients…');
-  const [u1, u2] = await Promise.all([
-    User.create({ type: "client", email: 'baptiste@gmail.com', password: pwd, firstName: 'Alice', lastName: 'Liddell' }),
-    User.create({ type: "client", email: 'karl@gmail.com', password: pwd, firstName: 'Bob',   lastName: 'Marley'   }),
-    User.create({ type: "client", email: 'Pedro@gmail.com', password: pwd, firstName: 'Perdo',   lastName: 'Odrep', role: 'ROLE_ADMIN' }),
+  const [u1, u2, u3] = await Promise.all([
+    User.create({ type: "client", email: 'baptiste@gmail.com', password: hashedPassword, firstName: 'Alice', lastName: 'Liddell' }),
+    User.create({ type: "client", email: 'karl@gmail.com', password: hashedPassword, firstName: 'Bob',   lastName: 'Marley'   }),
+    User.create({ type: "client", email: 'Pedro@gmail.com', password: hashedPassword, firstName: 'Perdo', lastName: 'Odrep', role: 'ROLE_ADMIN' }),
   ]);
 
   // --- Création de quelques paiements ---
@@ -51,7 +54,6 @@ async function main() {
   ]);
 
   console.log('✅ Fixtures appliquées avec succès !');
-
   process.exit(0);
 }
 
