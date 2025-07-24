@@ -7,6 +7,7 @@ const crypto    = require('crypto');
 const { User }  = require('../models');
 const authenticateToken    = require('../middleware/auth');
 const authorizeUserAccess  = require('../middleware/authorize');
+const authorizeMerchantOrAdmin = require('../middleware/authorizeMerchantOrAdmin');
 
 const router = express.Router();
 
@@ -90,6 +91,7 @@ router.get(
   '/:id/credentials',
   authenticateToken,
   authorizeUserAccess,
+  authorizeMerchantOrAdmin,
   async (req, res) => {
     try {
       const u = await User.findByPk(req.params.id);
@@ -111,6 +113,7 @@ router.post(
   '/:id/credentials',
   authenticateToken,
   authorizeUserAccess,
+  authorizeMerchantOrAdmin,
   async (req, res) => {
     try {
       const u = await User.findByPk(req.params.id);

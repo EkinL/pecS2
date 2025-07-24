@@ -57,7 +57,7 @@
       </div>
 
       <!-- Credentials Section -->
-      <div class="mt-8 bg-white shadow overflow-hidden sm:rounded-lg">
+      <div v-if="isMerchant || isAdmin" class="mt-8 bg-white shadow overflow-hidden sm:rounded-lg">
         <div class="px-4 py-5 sm:px-6">
           <h3 class="text-lg leading-6 font-medium text-gray-900">Credentials API</h3>
           <p class="mt-1 max-w-2xl text-sm text-gray-500">Vos clés d'API pour l'intégration.</p>
@@ -172,7 +172,7 @@ export default {
     }
   },
   computed: {
-    ...mapGetters('auth', ['user', 'isMerchant']),
+    ...mapGetters('auth', ['user', 'isMerchant', 'isAdmin']),
   },
   async created() {
     await this.checkAuthStatus()
