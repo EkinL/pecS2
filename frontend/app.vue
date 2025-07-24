@@ -466,15 +466,12 @@ export default {
     }
   },
   
-  mounted() {
-    this.checkAuthStatus()
-    if (this.isAuthenticated) {
-      this.loadUserData()
-    }
+    async mounted() {
+    await this.checkAuthStatus()
   },
   
   methods: {
-    checkAuthStatus() {
+    async checkAuthStatus() {
       const token = localStorage.getItem('token')
       const refreshToken = localStorage.getItem('refreshToken')
 
@@ -482,7 +479,8 @@ export default {
         this.token = token
         this.refreshToken = refreshToken
         this.isAuthenticated = true
-        this.fetchCurrentUser()
+        await this.fetchCurrentUser()
+        await this.loadUserData()
       }
     },
     
