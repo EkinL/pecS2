@@ -7,6 +7,15 @@
           <p class="mt-2 text-sm text-gray-700">Toutes vos transactions et achats.</p>
         </div>
       </div>
+      <div class="mt-4">
+        <input
+          v-model="search"
+          @keyup.enter="doSearch"
+          type="text"
+          placeholder="Rechercher"
+          class="border rounded px-3 py-2 w-full"
+        />
+      </div>
 
       <!-- History Table -->
       <div class="mt-8 flex flex-col">
@@ -74,6 +83,9 @@ export default {
   components: {
     ShoppingCart
   },
+  data() {
+    return { search: '' }
+  },
   computed: {
     ...mapGetters('payments', ['payments', 'loading'])
   },
@@ -82,6 +94,9 @@ export default {
   },
   methods: {
     ...mapActions('payments', ['fetchPayments']),
+    doSearch() {
+      this.fetchPayments({ q: this.search })
+    },
     formatDate(dateString) {
       if (!dateString) return 'N/A'
       return new Date(dateString).toLocaleDateString('fr-FR', {

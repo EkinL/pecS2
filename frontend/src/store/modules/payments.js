@@ -41,10 +41,10 @@ const mutations = {
 }
 
 const actions = {
-  async fetchPayments({ commit, rootGetters, dispatch }) {
+  async fetchPayments({ commit, rootGetters, dispatch }, params) {
     commit("SET_LOADING", true)
     try {
-      const response = await paymentService.getPayments()
+      const response = await paymentService.getPayments(params)
       const userId = rootGetters["auth/user"].id
       const userRole = rootGetters["auth/userRole"]
 

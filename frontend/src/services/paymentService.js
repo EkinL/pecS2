@@ -1,8 +1,8 @@
 import apiClient from './apiClient'
 
 export default {
-  getPayments() {
-    return apiClient.get("/payments")
+  getPayments(params) {
+    return apiClient.get('/payments', { params })
   },
 
   createPayment(paymentData) {
