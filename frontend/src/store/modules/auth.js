@@ -5,8 +5,15 @@ const state = {
   token: localStorage.getItem('token') || null,
   refreshToken: localStorage.getItem('refreshToken') || null,
   isAuthenticated: !!localStorage.getItem('token'),
-  impersonatorData: null,
-  impersonatingUser: null,
+  impersonatorData: localStorage.getItem('impersonatorToken')
+    ? {
+        user: JSON.parse(localStorage.getItem('impersonatorUser')),
+        token: localStorage.getItem('impersonatorToken'),
+        refreshToken: localStorage.getItem('impersonatorRefreshToken'),
+      }
+    : null,
+  impersonatingUser:
+    JSON.parse(localStorage.getItem('impersonatingUser')) || null,
 }
 
 const getters = {
@@ -50,12 +57,18 @@ const mutations = {
       token: state.token,
       refreshToken: state.refreshToken,
     }
+    localStorage.setItem('impersonatorUser', JSON.stringify(state.user))
+    localStorage.setItem('impersonatorToken', state.token)
+    localStorage.setItem('impersonatorRefreshToken', state.refreshToken)
     state.user = user
     state.token = token
     state.refreshToken = refreshToken
     state.isAuthenticated = true
     state.impersonatingUser = user
+    localStorage.setItem('impersonatingUser', JSON.stringify(user))
     localStorage.setItem('user', JSON.stringify(user))
+    localStorage.setItem('token', token)
+    localStorage.setItem('refreshToken', refreshToken)
   },
   STOP_IMPERSONATION(state) {
     if (!state.impersonatorData) return
@@ -69,6 +82,10 @@ const mutations = {
     localStorage.setItem('user', JSON.stringify(user))
     localStorage.setItem('token', token)
     localStorage.setItem('refreshToken', refreshToken)
+    localStorage.removeItem('impersonatorUser')
+    localStorage.removeItem('impersonatorToken')
+    localStorage.removeItem('impersonatorRefreshToken')
+    localStorage.removeItem('impersonatingUser')
   },
 }
 
@@ -153,7 +170,11 @@ const actions = {
     )
   },
 
-  async checkAuthStatus({ commit, dispatch }) {
+  async checkAuthStatus({ commit, dispatch, state }) {
+    if (state.impersonatorData) {
+      commit('STOP_IMPERSONATION')
+    }
+
     const token = localStorage.getItem('token')
     const refreshToken = localStorage.getItem('refreshToken')
 
