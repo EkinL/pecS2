@@ -47,6 +47,15 @@
         </div>
       </div>
 
+      <div class="mt-4 flex justify-end">
+        <button
+          @click="toggleEditProfile"
+          class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 transition-colors"
+        >
+          {{ editingProfile ? 'Annuler la modification' : 'Modifier mon profil' }}
+        </button>
+      </div>
+
       <!-- Credentials Section -->
       <div class="mt-8 bg-white shadow overflow-hidden sm:rounded-lg">
         <div class="px-4 py-5 sm:px-6">
