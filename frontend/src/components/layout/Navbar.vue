@@ -86,7 +86,7 @@
           >
             {{ isAdmin ? 'Admin' : isMerchant ? 'Marchand' : 'Client' }}
           </span>
-          <button @click="logout" class="text-gray-500 hover:text-gray-700 transition-colors">
+          <button @click="handleLogout" class="text-gray-500 hover:text-gray-700 transition-colors">
             <LogOut class="h-5 w-5" />
           </button>
         </div>
@@ -108,9 +108,9 @@ export default {
     ...mapGetters('auth', ['user', 'isMerchant', 'isClient', 'isAdmin']),
   },
   methods: {
-    ...mapActions('auth', ['logout']),
-    async logout() {
-      await this.logout()
+    ...mapActions('auth', { logoutAction: 'logout' }),
+    async handleLogout() {
+      await this.logoutAction()
       this.$router.push('/login')
     },
   },
