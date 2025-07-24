@@ -136,6 +136,17 @@ router.get('/me', authenticateToken, async (req, res) => {
   }
 });
 
+router.post('/impersonate/:id', authenticateToken, authorizeAdmin, async (req, res) => {
+  try {
+    const user = await User.findByPk(req.params.id)
+    if (!user) return res.status(404).json({ error: 'Utilisateur non trouvé' })
+    return _issueTokens(user, res)
+  } catch (err) {
+    console.error('[auth][impersonate]', err)
+    res.status(500).json({ error: 'Erreur serveur' })
+  }
+})
+
 router.get('/activate', authorizeAdmin, async (req,res) => {
   try {
     const { merchantId } = jwt.verify(req.query.token, process.env.JWT_SECRET);

@@ -5,6 +5,10 @@ export default {
     const res = await apiClient.get('/users')
     return res.data.filter((u) => u.role === 'ROLE_MERCHANT')
   },
+  async getUsers() {
+    const res = await apiClient.get('/users')
+    return res.data
+  },
   approveMerchant(id) {
     return apiClient.put(`/merchants/${id}`, { approved: true })
   },

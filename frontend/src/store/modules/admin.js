@@ -4,12 +4,14 @@ const state = {
   merchants: [],
   payments: [],
   stats: {},
+  users: [],
 }
 
 const getters = {
   merchants: (state) => state.merchants,
   payments: (state) => state.payments,
   stats: (state) => state.stats,
+  users: (state) => state.users,
 }
 
 const mutations = {
@@ -22,6 +24,9 @@ const mutations = {
   SET_STATS(state, stats) {
     state.stats = stats
   },
+  SET_USERS(state, users) {
+    state.users = users
+  },
 }
 
 const actions = {
@@ -33,12 +38,19 @@ const actions = {
     await adminService.approveMerchant(id)
     await dispatch('fetchMerchants')
   },
-  async impersonateMerchant({ commit }, id) {
+  async impersonateMerchant({ dispatch }, id) {
+    await dispatch('impersonateUser', id)
+  },
+  async impersonateUser({ commit }, id) {
     const res = await adminService.impersonate(id)
     const { accessToken, refreshToken, user } = res.data
     localStorage.setItem('token', accessToken)
     localStorage.setItem('refreshToken', refreshToken)
-    commit('auth/SET_AUTH_DATA', { user, token: accessToken, refreshToken }, { root: true })
+    commit('auth/START_IMPERSONATION', { user, token: accessToken, refreshToken }, { root: true })
+  },
+  async fetchUsers({ commit }) {
+    const users = await adminService.getUsers()
+    commit('SET_USERS', users)
   },
   async fetchPayments({ commit }, params) {
     const res = await adminService.getPayments(params)

@@ -5,6 +5,8 @@ const state = {
   token: localStorage.getItem('token') || null,
   refreshToken: localStorage.getItem('refreshToken') || null,
   isAuthenticated: !!localStorage.getItem('token'),
+  impersonatorData: null,
+  impersonatingUser: null,
 }
 
 const getters = {
@@ -14,6 +16,8 @@ const getters = {
   isMerchant: (state) => state.user?.role === 'ROLE_MERCHANT',
   isClient: (state) => state.user?.role === 'ROLE_CLIENT',
   isAdmin: (state) => state.user?.role === 'ROLE_ADMIN',
+  isImpersonating: (state) => !!state.impersonatingUser,
+  impersonatingUser: (state) => state.impersonatingUser,
 }
 
 const mutations = {
@@ -39,6 +43,32 @@ const mutations = {
   SET_USER(state, user) {
     state.user = user
     localStorage.setItem('user', JSON.stringify(user))
+  },
+  START_IMPERSONATION(state, { user, token, refreshToken }) {
+    state.impersonatorData = {
+      user: state.user,
+      token: state.token,
+      refreshToken: state.refreshToken,
+    }
+    state.user = user
+    state.token = token
+    state.refreshToken = refreshToken
+    state.isAuthenticated = true
+    state.impersonatingUser = user
+    localStorage.setItem('user', JSON.stringify(user))
+  },
+  STOP_IMPERSONATION(state) {
+    if (!state.impersonatorData) return
+    const { user, token, refreshToken } = state.impersonatorData
+    state.user = user
+    state.token = token
+    state.refreshToken = refreshToken
+    state.isAuthenticated = true
+    state.impersonatorData = null
+    state.impersonatingUser = null
+    localStorage.setItem('user', JSON.stringify(user))
+    localStorage.setItem('token', token)
+    localStorage.setItem('refreshToken', refreshToken)
   },
 }
 
@@ -168,6 +198,10 @@ const actions = {
       )
       throw error
     }
+  },
+
+  stopImpersonation({ commit }) {
+    commit('STOP_IMPERSONATION')
   },
 }
 
