@@ -26,6 +26,12 @@ const mutations = {
       state.payments.splice(index, 1, updatedPayment)
     }
   },
+  SET_PAYMENT_STATUS(state, { id, status }) {
+    const p = state.payments.find((pay) => pay.id === id)
+    if (p) {
+      p.status = status
+    }
+  },
   REMOVE_PAYMENT(state, paymentId) {
     state.payments = state.payments.filter((p) => p.id !== paymentId)
   },

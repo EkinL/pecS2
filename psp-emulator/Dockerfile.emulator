@@ -1,0 +1,22 @@
+# Dockerfile.emulator
+
+# 1) Choix de l'image Node légère
+FROM node:18-alpine
+
+# 2) Création du répertoire de travail
+WORKDIR /app
+
+# 3) Copie des définitions de dépendances et installation
+COPY package*.json ./
+RUN npm install --production
+
+# 4) Copie du code de l'émulateur (suppose que le script s'appelle psp-emulator.js)
+COPY . .
+
+# 5) Expose le port sur lequel ton émulateur écoute (4000)
+EXPOSE 4000
+
+# 6) Démarrage du service
+#    Si tu as un script dans package.json (ex: "emulator": "node psp-emulator.js"), tu peux faire ["npm","run","emulator"]
+#    Ici on part du principe que ton fichier s'appelle psp-emulator.js
+CMD ["node", "psp-emulator.js"]

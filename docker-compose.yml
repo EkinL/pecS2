@@ -35,12 +35,12 @@ services:
   psp-emulator:
     build:
       context: ./backend
-      dockerfile: Dockerfile.emulator
+      dockerfile: ../psp-emulator/Dockerfile.emulator
     environment:
       PSP_DELAY_MS: 10000
-      PLATFORM_PSP_CALLBACK_URL: http://backend:3000/webhooks/psp
+      PLATFORM_PSP_CALLBACK_URL: http://backend:3001/webhooks/psp
     ports:
-      - '4000:4000'
+      - "4000:4000"
     depends_on:
       - backend
 
