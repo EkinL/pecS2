@@ -94,8 +94,7 @@ router.post('/', authenticateToken, authorizePaymentAccess, valideCard,
       const p = await Payment.create({ seller_id, buyer_id, amount, currency, stripe_id });
       return res.status(201).json(p);
     } catch (err) {
-      const isUUIDError = err.name === 'SequelizeDatabaseError'
-                       && err.parent?.code === '22P02';
+      const isUUIDError = err.name === 'SequelizeDatabaseError' && err.parent?.code === '22P02';
       if (!isUUIDError) {
         console.error('❌ [PAYMENTS POST] SQL Error:', err);
         return res.status(500).json({ error: 'Erreur SQL', detail: err.message });

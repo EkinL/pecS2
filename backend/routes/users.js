@@ -60,9 +60,6 @@ router.get(
 
 /**
  * PUT /users/:id
- * • Merchant ↦ peut mettre à jour ses champs métier
- * • Client   ↦ peut mettre à jour firstName & lastName
- * • Admin    ↦ idem merchant (peut tout modifier)
  */
 router.put(
   '/:id',
