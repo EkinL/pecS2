@@ -103,6 +103,7 @@
 import { mapGetters, mapActions } from 'vuex'
 import { Plus, CreditCard } from 'lucide-vue-next'
 import CreatePaymentModal from '../../components/modals/CreatePaymentModal.vue'
+import sseService from '../../services/sseService'
 
 export default {
   name: 'Payments',
@@ -113,7 +114,8 @@ export default {
   },
   data() {
     return {
-      showCreateModal: false
+      showCreateModal: false,
+      sse: null
     }
   },
   computed: {
@@ -121,6 +123,10 @@ export default {
   },
   async created() {
     await this.fetchPayments()
+    sseService.connect()
+  },
+  beforeUnmount() {
+    sseService.close()
   },
   methods: {
     ...mapActions('payments', ['fetchPayments', 'updatePayment', 'deletePayment']),

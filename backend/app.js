@@ -5,11 +5,13 @@ const mongoose = require("mongoose");
 
 const sequelize = require('./sequelize');
 const allRoutes = require('./routes')
+const sse = require('./sse');
 
 const User = require("./models/user");
 const UserMongo = require("./models/user.mongo");
 const Payment = require("./models/payment.mongo");
 const PaymentMongo = require("./models/payment.mongo");
+
 
 const app = express();
 
@@ -17,6 +19,7 @@ app.use(cors());
 app.use(express.json());
 
 app.use('/', allRoutes)
+app.use('/sse', sse.router)
 
 mongoose.connect(process.env.MONGO_URI, {
   useNewUrlParser: true,

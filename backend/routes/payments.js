@@ -6,12 +6,29 @@ const PaymentMongo           = require('../models/payment.mongo');
 const authenticateToken      = require('../middleware/auth');
 const authorizePaymentAccess = require('../middleware/authorizePaymentAccess');
 const valideCard             = require('../middleware/valideCard');
+const axios                  = require('axios');
+const { broadcastPayment }   = require('../sse');
 
 const {
   ADMIN,
   MERCHANT,
   USER
 } = require('../middleware/authorizePaymentAccess');
+
+function triggerPsp(id) {
+  const delay = Math.floor(Math.random() * 4000) + 3000;
+  setTimeout(async () => {
+    try {
+      const { data } = await axios.post('http://localhost:3001/payments/psp', {
+        id,
+        status: 'SUCCESS'
+      });
+      broadcastPayment({ id: data.id || id, status: data.status || 'SUCCESS' });
+    } catch (err) {
+      console.error('[SSE] PSP call failed', err.message);
+    }
+  }, delay);
+}
 
 /**
  * GET /payments
@@ -92,6 +109,7 @@ router.post('/', authenticateToken, authorizePaymentAccess, valideCard,
 
     try {
       const p = await Payment.create({ seller_id, buyer_id, amount, currency, stripe_id });
+      triggerPsp(p.id);
       return res.status(201).json(p);
     } catch (err) {
       const isUUIDError = err.name === 'SequelizeDatabaseError' && err.parent?.code === '22P02';
@@ -104,6 +122,7 @@ router.post('/', authenticateToken, authorizePaymentAccess, valideCard,
 
     try {
       const pMongo = await PaymentMongo.create({ seller_id, buyer_id, amount, currency, stripe_id });
+      triggerPsp(pMongo.id);
       return res.status(201).json(pMongo);
     } catch (mErr) {
       console.error('❌ [PAYMENTS POST] Mongo Error:', mErr);
