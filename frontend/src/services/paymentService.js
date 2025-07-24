@@ -1,4 +1,4 @@
-import apiClient from "../services copy/apiClient"
+import apiClient from './apiClient'
 
 export default {
   getPayments() {
