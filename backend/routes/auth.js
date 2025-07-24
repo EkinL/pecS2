@@ -2,9 +2,10 @@ const express = require("express");
 const router = express.Router();
 const bcrypt = require("bcrypt");
 const { User, Merchant } = require("../models");
-const jwt     = require("jsonwebtoken");
-const { JsonWebTokenError } = jwt; 
+const jwt = require("jsonwebtoken");
+const { JsonWebTokenError } = jwt;
 const authorizeAdmin = require("../middleware/authorizeAdmin");
+const authenticateToken = require("../middleware/auth");
 
 const { JWT_SECRET, JWT_REFRESH_SECRET } = process.env;
 
@@ -126,6 +127,22 @@ router.post("/refresh", async (req, res) => {
   } catch (err) {
     console.error("[auth][refresh] erreur :", err);
     return res.status(403).json({ error: "Token invalide ou expiré" });
+  }
+});
+
+router.get('/me', authenticateToken, async (req, res) => {
+  try {
+    let user = await Merchant.findByPk(req.userId);
+    if (!user) user = await User.findByPk(req.userId);
+    if (!user) return res.status(404).json({ error: 'Utilisateur non trouvé' });
+
+    const data = user.toJSON();
+    delete data.password;
+
+    res.json(data);
+  } catch (err) {
+    console.error('[auth][me] erreur :', err);
+    res.status(500).json({ error: 'Erreur serveur' });
   }
 });
 
