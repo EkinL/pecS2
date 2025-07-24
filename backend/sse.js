@@ -4,6 +4,7 @@ const router = express.Router();
 
 let paymentClients = [];
 let statsClients = [];
+let activityClients = [];
 
 router.get('/payments', (req, res) => {
   res.setHeader('Content-Type', 'text/event-stream');
@@ -40,12 +41,57 @@ router.get('/stats', async (req, res) => {
   });
 });
 
+router.get('/activity', async (req, res) => {
+  res.setHeader('Content-Type', 'text/event-stream');
+  res.setHeader('Cache-Control', 'no-cache');
+  res.setHeader('Connection', 'keep-alive');
+  res.flushHeaders();
+
+  const id = Date.now();
+  activityClients.push({ id, res });
+
+  try {
+    const events = await getRecentActivity();
+    res.write(`data: ${JSON.stringify(events)}\n\n`);
+  } catch (err) {
+    console.error('[SSE] Initial activity error', err);
+  }
+
+  req.on('close', () => {
+    activityClients = activityClients.filter(c => c.id !== id);
+  });
+});
+
 function broadcastPayment(data) {
   paymentClients.forEach(client => {
     try {
       client.res.write(`data: ${JSON.stringify(data)}\n\n`);
     } catch (err) {
       paymentClients = paymentClients.filter(c => c !== client);
+    }
+  });
+}
+
+async function getRecentActivity(limit = 5) {
+  const users = await User.findAll({
+    order: [['updatedAt', 'DESC']],
+    limit,
+  });
+  return users.map(u => ({
+    id: u.id,
+    name: `${u.firstName || ''} ${u.lastName || ''}`.trim() || u.email,
+    role: u.role,
+    action: u.createdAt.getTime() === u.updatedAt.getTime() ? 'CREATED' : 'UPDATED',
+    date: u.updatedAt,
+  }));
+}
+
+function broadcastActivity(event) {
+  activityClients.forEach(client => {
+    try {
+      client.res.write(`data: ${JSON.stringify(event)}\n\n`);
+    } catch (err) {
+      activityClients = activityClients.filter(c => c !== client);
     }
   });
 }
@@ -71,4 +117,11 @@ async function broadcastStats(data) {
   });
 }
 
-module.exports = { router, broadcastPayment, broadcastStats, computeStats };
+module.exports = {
+  router,
+  broadcastPayment,
+  broadcastStats,
+  computeStats,
+  broadcastActivity,
+  getRecentActivity,
+};

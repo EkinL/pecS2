@@ -5,6 +5,7 @@ const state = {
   payments: [],
   stats: {},
   users: [],
+  activities: [],
 }
 
 const getters = {
@@ -12,6 +13,7 @@ const getters = {
   payments: (state) => state.payments,
   stats: (state) => state.stats,
   users: (state) => state.users,
+  activities: (state) => state.activities,
 }
 
 const mutations = {
@@ -26,6 +28,12 @@ const mutations = {
   },
   SET_USERS(state, users) {
     state.users = users
+  },
+  SET_ACTIVITIES(state, activities) {
+    state.activities = activities
+  },
+  ADD_ACTIVITY(state, activity) {
+    state.activities.unshift(activity)
   },
 }
 
@@ -75,6 +83,10 @@ const actions = {
   async fetchStats({ commit }) {
     const res = await adminService.getStats()
     commit('SET_STATS', res.data)
+  },
+  async fetchActivities({ commit }) {
+    const res = await adminService.getActivities()
+    commit('SET_ACTIVITIES', res.data)
   },
 }
 

@@ -8,6 +8,7 @@ const { User }  = require('../models');
 const authenticateToken    = require('../middleware/auth');
 const authorizeUserAccess  = require('../middleware/authorize');
 const authorizeMerchantOrAdmin = require('../middleware/authorizeMerchantOrAdmin');
+const { broadcastActivity } = require('../sse');
 
 const router = express.Router();
 
@@ -83,6 +84,14 @@ router.put(
       }
 
       await u.update({ firstName, lastName, email, companyName, kbis, status, redirect_success, redirect_cancel, currency });
+
+      broadcastActivity({
+        action: 'UPDATED',
+        id: u.id,
+        name: `${u.firstName || ''} ${u.lastName || ''}`.trim() || u.email,
+        role: u.role,
+        date: u.updatedAt,
+      });
 
       return res.json(u);
     } catch (err) {

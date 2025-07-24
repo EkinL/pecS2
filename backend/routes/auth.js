@@ -6,7 +6,7 @@ const jwt = require("jsonwebtoken");
 const { JsonWebTokenError } = jwt;
 const authorizeAdmin = require("../middleware/authorizeAdmin");
 const authenticateToken = require("../middleware/auth");
-const { broadcastStats, computeStats } = require('../sse');
+const { broadcastStats, computeStats, broadcastActivity } = require('../sse');
 
 const { JWT_SECRET, JWT_REFRESH_SECRET } = process.env;
 
@@ -48,6 +48,13 @@ router.post("/register", async (req, res) => {
 
       const stats = await computeStats();
       broadcastStats(stats);
+      broadcastActivity({
+        action: 'CREATED',
+        id: merchant.id,
+        name: `${merchant.firstName || ''} ${merchant.lastName || ''}`.trim() || merchant.email,
+        role: merchant.role,
+        date: merchant.createdAt,
+      });
       return res.status(201).json({
         id: merchant.id,
         role: merchant.role
@@ -63,6 +70,13 @@ router.post("/register", async (req, res) => {
 
       const stats = await computeStats();
       broadcastStats(stats);
+      broadcastActivity({
+        action: 'CREATED',
+        id: user.id,
+        name: `${user.firstName || ''} ${user.lastName || ''}`.trim() || user.email,
+        role: user.role,
+        date: user.createdAt,
+      });
       return res.status(201).json({
         id: user.id,
         role: user.role

@@ -21,4 +21,7 @@ export default {
   getStats() {
     return apiClient.get('/admin/stats')
   },
+  getActivities() {
+    return apiClient.get('/admin/activity')
+  },
 }

@@ -67,9 +67,11 @@
         <div class="bg-white shadow overflow-hidden sm:rounded-md">
           <div class="px-4 py-5 sm:px-6">
             <h3 class="text-lg leading-6 font-medium text-gray-900">Activité récente</h3>
-            <p class="mt-1 max-w-2xl text-sm text-gray-500">Vos dernières transactions</p>
+            <p class="mt-1 max-w-2xl text-sm text-gray-500">
+              {{ isAdmin ? 'Dernières actions sur les comptes' : 'Vos dernières transactions' }}
+            </p>
           </div>
-          <ul class="divide-y divide-gray-200">
+          <ul v-if="!isAdmin" class="divide-y divide-gray-200">
             <li v-for="payment in recentPayments" :key="payment.id" class="px-4 py-4 sm:px-6">
               <div class="flex items-center justify-between">
                 <div class="flex items-center">
@@ -96,6 +98,26 @@
               </div>
             </li>
           </ul>
+          <ul v-else class="divide-y divide-gray-200">
+            <li v-for="act in recentActivities" :key="act.date" class="px-4 py-4 sm:px-6">
+              <div class="flex items-center justify-between">
+                <div class="flex items-center">
+                  <div class="flex-shrink-0">
+                    <div class="h-8 w-8 rounded-full bg-gray-200 flex items-center justify-center">
+                      <User class="h-4 w-4 text-gray-500" />
+                    </div>
+                  </div>
+                  <div class="ml-4">
+                    <div class="text-sm font-medium text-gray-900">{{ act.name }}</div>
+                    <div class="text-sm text-gray-500">
+                      {{ act.action === 'CREATED' ? 'Compte créé' : 'Compte modifié' }}
+                    </div>
+                  </div>
+                </div>
+                <div class="text-sm text-gray-500">{{ new Date(act.date).toLocaleDateString() }}</div>
+              </div>
+            </li>
+          </ul>
         </div>
       </div>
     </div>
@@ -104,22 +126,24 @@
 
 <script>
 import { mapGetters, mapActions } from 'vuex'
-import { CreditCard } from 'lucide-vue-next'
+import { CreditCard, User } from 'lucide-vue-next'
 import StatsCard from '../components/common/StatsCard.vue'
 import BarChart from '../components/common/BarChart.vue'
 import statsSseService from '../services/statsSseService'
+import activitySseService from '../services/activitySseService'
 
 export default {
   name: 'Dashboard',
   components: {
     CreditCard,
+    User,
     StatsCard,
     BarChart
   },
   computed: {
     ...mapGetters('auth', ['user', 'isMerchant', 'isAdmin']),
     ...mapGetters('payments', ['payments', 'totalAmount', 'successfulPayments']),
-    ...mapGetters('admin', { adminPayments: 'payments', stats: 'stats' }),
+    ...mapGetters('admin', { adminPayments: 'payments', stats: 'stats', adminActivities: 'activities' }),
     dashboardTitle() {
       if (this.isAdmin) return 'Dashboard Admin'
       return this.isMerchant ? 'Dashboard Marchand' : 'Dashboard Client'
@@ -135,12 +159,22 @@ export default {
       const list = this.isAdmin ? this.adminPayments : this.payments
       return list.slice(0, 5)
     }
+    ,recentActivities() {
+      return this.adminActivities.slice(0, 5)
+    }
   },
   async created() {
     await this.fetchPayments()
     if (this.isAdmin) {
-      await Promise.all([this.fetchStats(), this.fetchAdminPayments()])
+      await Promise.all([this.fetchStats(), this.fetchAdminPayments(), this.fetchActivities()])
       statsSseService.connect()
+      activitySseService.connect()
+    }
+  },
+  beforeUnmount() {
+    if (this.isAdmin) {
+      statsSseService.close()
+      activitySseService.close()
     }
   },
   beforeUnmount() {
@@ -148,7 +182,7 @@ export default {
   },
   methods: {
     ...mapActions('payments', ['fetchPayments']),
-    ...mapActions('admin', { fetchAdminPayments: 'fetchPayments', fetchStats: 'fetchStats' }),
+    ...mapActions('admin', { fetchAdminPayments: 'fetchPayments', fetchStats: 'fetchStats', fetchActivities: 'fetchActivities' }),
     getStatusClass(status) {
       switch (status) {
         case 'SUCCESS':

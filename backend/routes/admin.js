@@ -29,4 +29,24 @@ router.get('/stats', authenticateToken, authorizeAdmin, async (req, res) => {
   }
 });
 
+router.get('/activity', authenticateToken, authorizeAdmin, async (req, res) => {
+  try {
+    const users = await User.findAll({
+      order: [['updatedAt', 'DESC']],
+      limit: 10,
+    });
+    const activity = users.map(u => ({
+      id: u.id,
+      name: `${u.firstName || ''} ${u.lastName || ''}`.trim() || u.email,
+      role: u.role,
+      action: u.createdAt.getTime() === u.updatedAt.getTime() ? 'CREATED' : 'UPDATED',
+      date: u.updatedAt,
+    }));
+    res.json(activity);
+  } catch (err) {
+    console.error('[ADMIN ACTIVITY]', err);
+    res.status(500).json({ error: 'Erreur serveur' });
+  }
+});
+
 module.exports = router;
