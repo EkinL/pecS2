@@ -7,7 +7,7 @@ const authenticateToken      = require('../middleware/auth');
 const authorizePaymentAccess = require('../middleware/authorizePaymentAccess');
 const valideCard             = require('../middleware/valideCard');
 const axios                  = require('axios');
-const { Op }                 = require('sequelize');
+const { Op, literal }        = require('sequelize');
 const { broadcastPayment, broadcastStats, computeStats }   = require('../sse');
 
 const {
@@ -47,9 +47,10 @@ router.get(
     const baseWhere = scope?.where || {};
     const where = { ...baseWhere };
     if (q) {
+      const pattern = `%${q}%`;
       where[Op.or] = [
-        { id: { [Op.iLike]: `%${q}%` } },
-        { stripe_id: { [Op.iLike]: `%${q}%` } },
+        literal(`CAST("Payment"."id" AS TEXT) ILIKE '${pattern}'`),
+        { stripe_id: { [Op.iLike]: pattern } },
       ];
     }
 
