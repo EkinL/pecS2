@@ -7,7 +7,7 @@ const schema = new mongoose.Schema({
   email:        { type: String, unique: true, required: true, lowercase: true },
   password:     { type: String, required: true },
   role:         { type: String, enum: ['ROLE_MERCHANT'], default: 'ROLE_MERCHANT' },
-  role:         { type: String, enum: ['PENDING','ACTIVE'], default: 'PENDING' },
+  status:         { type: String, enum: ['PENDING','ACTIVE'], default: 'PENDING' },
   refreshTokens:{ type: [String], default: [] },
   app_id:       { type: String, default: null },
   app_secret:   { type: String, default: null }
