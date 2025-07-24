@@ -1,31 +1,63 @@
 <template>
-  <div class="w-full h-48 flex items-end space-x-4">
-    <div
-      v-for="(v, i) in data"
-      :key="i"
-      class="flex-1 flex flex-col items-center"
-    >
-      <div
-        class="w-full bg-blue-500 rounded-t"
-        :style="{ height: ((v / max) * 100) + '%' }"
-      ></div>
-      <span class="mt-1 text-xs text-gray-600">{{ labels[i] }}</span>
-      <span class="text-xs font-semibold">{{ v }}</span>
-    </div>
+  <div class="w-full">
+    <canvas ref="canvas"></canvas>
   </div>
 </template>
 
 <script>
+import { Chart, BarElement, CategoryScale, LinearScale, Tooltip, Legend } from 'chart.js'
+
+Chart.register(BarElement, CategoryScale, LinearScale, Tooltip, Legend)
+
 export default {
   name: 'BarChart',
   props: {
     data: { type: Array, required: true },
-    labels: { type: Array, required: true },
+    labels: { type: Array, required: true }
   },
-  computed: {
-    max() {
-      return Math.max(...this.data, 1)
-    },
+  mounted() {
+    this.renderChart()
   },
+  watch: {
+    data() {
+      this.renderChart()
+    }
+  },
+  methods: {
+    renderChart() {
+      if (this.chart) {
+        this.chart.destroy()
+      }
+      this.chart = new Chart(this.$refs.canvas.getContext('2d'), {
+        type: 'bar',
+        data: {
+          labels: this.labels,
+          datasets: [
+            {
+              label: 'Total',
+              data: this.data,
+              backgroundColor: '#3b82f6'
+            }
+          ]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          scales: {
+            y: {
+              beginAtZero: true
+            }
+          }
+        }
+      })
+    }
+  }
 }
 </script>
+
+<style scoped>
+canvas {
+  width: 100% !important;
+  height: 200px !important;
+}
+</style>
