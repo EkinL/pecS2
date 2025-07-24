@@ -55,7 +55,7 @@
                       {{ payment.id.slice(-8) }}
                     </td>
                     <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-                      {{ payment.buyer_id.slice(-8) }}
+                      {{ formatBuyer(payment.buyer, payment.buyer_id) }}
                     </td>
                     <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
                       {{ payment.amount }}{{ payment.currency }}
@@ -144,6 +144,11 @@ export default {
         default:
           return 'bg-gray-100 text-gray-800'
       }
+    },
+    formatBuyer(buyer, id) {
+      if (!buyer) return id.slice(-8)
+      const name = `${buyer.firstName || ''} ${buyer.lastName || ''}`.trim()
+      return name || id.slice(-8)
     }
   }
 }

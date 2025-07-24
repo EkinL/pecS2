@@ -58,11 +58,18 @@ router.get(
     try {
       const all = await Payment.findAll({
         where,
-        include: [{
-          model: User,
-          as: 'seller',
-          attributes: ['id', 'firstName', 'lastName', 'companyName', 'role']
-        }]
+        include: [
+          {
+            model: User,
+            as: 'seller',
+            attributes: ['id', 'firstName', 'lastName', 'companyName', 'role']
+          },
+          {
+            model: User,
+            as: 'buyer',
+            attributes: ['id', 'firstName', 'lastName']
+          }
+        ]
       });
       return res.json(all);
     } catch (err) {
@@ -77,13 +84,15 @@ router.get(
       ];
     }
     const allMongo = await PaymentMongo.find(filter).exec();
-    const withSeller = await Promise.all(allMongo.map(async p => {
+    const withUsers = await Promise.all(allMongo.map(async p => {
       const seller = await UserMongo.findById(p.seller_id).exec();
+      const buyer = await UserMongo.findById(p.buyer_id).exec();
       const obj = p.toJSON();
       obj.seller = seller ? seller.toJSON() : null;
+      obj.buyer = buyer ? buyer.toJSON() : null;
       return obj;
     }));
-    return res.json(withSeller);
+    return res.json(withUsers);
   }
 );
 
@@ -100,11 +109,18 @@ router.get(
 
     try {
       const p = await Payment.findByPk(id, {
-        include: [{
-          model: User,
-          as: 'seller',
-          attributes: ['id', 'firstName', 'lastName', 'companyName', 'role']
-        }]
+        include: [
+          {
+            model: User,
+            as: 'seller',
+            attributes: ['id', 'firstName', 'lastName', 'companyName', 'role']
+          },
+          {
+            model: User,
+            as: 'buyer',
+            attributes: ['id', 'firstName', 'lastName']
+          }
+        ]
       });
       if (p) {
         const ok = role === ADMIN
@@ -125,8 +141,10 @@ router.get(
       if (!okMongo) return res.status(403).json({ error: 'Accès refusé' });
 
       const seller = await UserMongo.findById(pMongo.seller_id).exec();
+      const buyer = await UserMongo.findById(pMongo.buyer_id).exec();
       const obj = pMongo.toJSON();
       obj.seller = seller ? seller.toJSON() : null;
+      obj.buyer = buyer ? buyer.toJSON() : null;
       return res.json(obj);
     } catch {
       return res.status(400).json({ error: 'ID invalide' });

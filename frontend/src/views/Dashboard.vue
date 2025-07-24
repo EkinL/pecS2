@@ -85,7 +85,7 @@
                       {{ payment.amount }}{{ payment.currency }}
                     </div>
                     <div class="text-sm text-gray-500">
-                      {{ isMerchant ? `Acheteur: ${payment.buyer_id}` : `Vendeur: ${formatSeller(payment.seller, payment.seller_id)}` }}
+                      {{ isMerchant ? `Acheteur: ${formatBuyer(payment.buyer, payment.buyer_id)}` : `Vendeur: ${formatSeller(payment.seller, payment.seller_id)}` }}
                     </div>
                   </div>
                 </div>
@@ -201,6 +201,11 @@ export default {
         return seller.companyName
       }
       const name = `${seller.firstName || ''} ${seller.lastName || ''}`.trim()
+      return name || id.slice(-8)
+    },
+    formatBuyer(buyer, id) {
+      if (!buyer) return id.slice(-8)
+      const name = `${buyer.firstName || ''} ${buyer.lastName || ''}`.trim()
       return name || id.slice(-8)
     }
   }
