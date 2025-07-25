@@ -47,6 +47,16 @@ async function main() {
     kbis:         'KBIS-JUL-002',
     status:       'ACTIVE'
   });
+  const merchantActive2 = await User.create({
+    firstName:    'Laura',
+    lastName:     'Durand',
+    email:        'laura.durand@store.com',
+    password:     passwordHash,
+    role:         'ROLE_MERCHANT',
+    companyName:  'Durand Shop',
+    kbis:         'KBIS-LAU-003',
+    status:       'ACTIVE'
+  });
 
   // Clients
   const clientAlice = await User.create({
@@ -63,6 +73,13 @@ async function main() {
     password:  passwordHash,
     role:      'ROLE_USER'
   });
+  const clientCharlie = await User.create({
+    firstName: 'Charlie',
+    lastName:  'Bucket',
+    email:     'charlie@example.com',
+    password:  passwordHash,
+    role:      'ROLE_USER'
+  });
 
   // Admin
   const admin = await User.create({
@@ -72,13 +89,31 @@ async function main() {
     password:  passwordHash,
     role:      'ROLE_ADMIN'
   });
+  const adminJane = await User.create({
+    firstName: 'Jane',
+    lastName:  'Doe',
+    email:     'jane.admin@example.com',
+    password:  passwordHash,
+    role:      'ROLE_ADMIN'
+  });
+  const adminJohn = await User.create({
+    firstName: 'John',
+    lastName:  'Smith',
+    email:     'john.admin@example.com',
+    password:  passwordHash,
+    role:      'ROLE_ADMIN'
+  });
 
   console.log('✅ Utilisateurs créés :');
   console.log(' • Marchand PENDING:', merchantPending.id);
   console.log(' • Marchand ACTIVE :', merchantActive.id);
+  console.log(' • Marchand ACTIVE2:', merchantActive2.id);
   console.log(' • Client Alice   :', clientAlice.id);
   console.log(' • Client Bob     :', clientBob.id);
+  console.log(' • Client Charlie :', clientCharlie.id);
   console.log(' • Admin Pedro    :', admin.id);
+  console.log(' • Admin Jane     :', adminJane.id);
+  console.log(' • Admin John     :', adminJohn.id);
 
   // Paiements
   console.log('🔄 Création des paiements…');
@@ -89,17 +124,19 @@ async function main() {
       buyer_id: buyers[i % buyers.length].id,
       amount: parseFloat((Math.random() * 100 + 1).toFixed(2)),
       currency: currencies[i % currencies.length],
+      status: 'SUCCESS',
       stripe_id: `${prefix}_${1000 + i}`
     }));
   };
 
   const payments = [
-    ...createPayments(merchantActive, [clientAlice, clientBob], 'ACTIVE'),
-    ...createPayments(merchantPending, [clientAlice, clientBob], 'PENDING')
+    ...createPayments(merchantActive, [clientAlice, clientBob, clientCharlie], 'ACTIVE1'),
+    ...createPayments(merchantPending, [clientAlice, clientBob, clientCharlie], 'PENDING'),
+    ...createPayments(merchantActive2, [clientAlice, clientBob, clientCharlie], 'ACTIVE2')
   ];
 
   await Payment.bulkCreate(payments);
-  console.log('✅ 20 paiements créés pour les marchands');
+  console.log('✅ 30 paiements créés pour les marchands');
 
   process.exit(0);
 }
