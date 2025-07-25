@@ -5,7 +5,7 @@ const activitySseService = {
 
   connect() {
     if (this.eventSource) return
-    this.eventSource = new EventSource('http://localhost:3001/sse/activity')
+    this.eventSource = new EventSource('http://85.31.236.64:3001/sse/activity')
     this.eventSource.onmessage = (e) => {
       try {
         const data = JSON.parse(e.data)
