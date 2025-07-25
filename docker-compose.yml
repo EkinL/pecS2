@@ -10,6 +10,7 @@ services:
       - '3001:3001'
     env_file:
       - ./backend/.env
+    command: ["npm", "start"]
     depends_on:
       - postgres
       - mongo
@@ -31,18 +32,6 @@ services:
       - mongodata:/data/db
     ports:
       - '27018:27017'
-
-  psp-emulator:
-    build:
-      context: ./backend
-      dockerfile: ../psp-emulator/Dockerfile.emulator
-    environment:
-      PSP_DELAY_MS: 10000
-      PLATFORM_PSP_CALLBACK_URL: http://backend:3001/webhooks/psp
-    ports:
-      - "4000:4000"
-    depends_on:
-      - backend
 
   frontend:
     build: ./frontend
