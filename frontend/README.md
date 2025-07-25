@@ -75,13 +75,13 @@ src/
 Créez un fichier \`.env.local\` à la racine du projet :
 
 \`\`\`env
-VITE_API_BASE_URL=http://85.31.236.64:3001
+VITE_API_BASE_URL=https://pecapi.lilianhammache.com
 VITE_APP_NAME=PaymentPro
 \`\`\`
 
 ### Proxy API
 
-Le serveur de développement est configuré pour proxifier les requêtes API vers \`http://85.31.236.64:3001\`.
+Le serveur de développement est configuré pour proxifier les requêtes API vers \`https://pecapi.lilianhammache.com\`.
 
 ## 📱 Fonctionnalités
 

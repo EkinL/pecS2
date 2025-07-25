@@ -21,7 +21,7 @@ function triggerPsp(id) {
   const delay = Math.floor(Math.random() * 4000) + 3000;
   setTimeout(async () => {
     try {
-      const { data } = await axios.post('http://85.31.236.64:3001/payments/psp', {
+      const { data } = await axios.post('https://pecapi.lilianhammache.com/payments/psp', {
         id,
         status: 'SUCCESS'
       });

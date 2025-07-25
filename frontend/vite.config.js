@@ -18,7 +18,7 @@ export default defineConfig({
     cors: true,
     proxy: {
       "/api": {
-        target: "http://85.31.236.64:3001",
+        target: "https://pecapi.lilianhammache.com",
         changeOrigin: true,
         secure: false,
         rewrite: (path) => path.replace(/^\/api/, ""),

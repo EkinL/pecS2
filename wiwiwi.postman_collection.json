@@ -24,7 +24,7 @@
 							}
 						],
 						"url": {
-							"raw": "http://85.31.236.64:3001/users",
+							"raw": "https://pecapi.lilianhammache.com/users",
 							"protocol": "http",
 							"host": [
 								"85.31.236.64"
@@ -52,7 +52,7 @@
 							}
 						],
 						"url": {
-							"raw": "http://85.31.236.64:3001/users/1397c6ee-e2dc-4f99-b6b9-03807c28c39c",
+							"raw": "https://pecapi.lilianhammache.com/users/1397c6ee-e2dc-4f99-b6b9-03807c28c39c",
 							"protocol": "http",
 							"host": [
 								"85.31.236.64"
@@ -81,7 +81,7 @@
 							}
 						],
 						"url": {
-							"raw": "http://85.31.236.64:3001/users/1397c6ee-e2dc-4f99-b6b9-03807c28c39c/credentials",
+							"raw": "https://pecapi.lilianhammache.com/users/1397c6ee-e2dc-4f99-b6b9-03807c28c39c/credentials",
 							"protocol": "http",
 							"host": [
 								"85.31.236.64"
@@ -111,7 +111,7 @@
 							}
 						],
 						"url": {
-							"raw": "http://85.31.236.64:3001/users/1397c6ee-e2dc-4f99-b6b9-03807c28c39c/credentials",
+							"raw": "https://pecapi.lilianhammache.com/users/1397c6ee-e2dc-4f99-b6b9-03807c28c39c/credentials",
 							"protocol": "http",
 							"host": [
 								"85.31.236.64"
@@ -153,7 +153,7 @@
 							}
 						},
 						"url": {
-							"raw": "http://85.31.236.64:3001/users/1397c6ee-e2dc-4f99-b6b9-03807c28c39c",
+							"raw": "https://pecapi.lilianhammache.com/users/1397c6ee-e2dc-4f99-b6b9-03807c28c39c",
 							"protocol": "http",
 							"host": [
 								"85.31.236.64"
@@ -182,7 +182,7 @@
 							}
 						],
 						"url": {
-							"raw": "http://85.31.236.64:3001/users/1397c6ee-e2dc-4f99-b6b9-03807c28c39c",
+							"raw": "https://pecapi.lilianhammache.com/users/1397c6ee-e2dc-4f99-b6b9-03807c28c39c",
 							"protocol": "http",
 							"host": [
 								"85.31.236.64"
@@ -229,7 +229,7 @@
 							}
 						},
 						"url": {
-							"raw": "http://85.31.236.64:3001/auth/refresh",
+							"raw": "https://pecapi.lilianhammache.com/auth/refresh",
 							"protocol": "http",
 							"host": [
 								"85.31.236.64"
@@ -263,7 +263,7 @@
 							}
 						},
 						"url": {
-							"raw": "http://85.31.236.64:3001/auth/register",
+							"raw": "https://pecapi.lilianhammache.com/auth/register",
 							"protocol": "http",
 							"host": [
 								"85.31.236.64"
@@ -297,7 +297,7 @@
 							}
 						},
 						"url": {
-							"raw": "http://85.31.236.64:3001/auth/register",
+							"raw": "https://pecapi.lilianhammache.com/auth/register",
 							"protocol": "http",
 							"host": [
 								"85.31.236.64"
@@ -331,7 +331,7 @@
 							}
 						},
 						"url": {
-							"raw": "http://85.31.236.64:3001/auth/login",
+							"raw": "https://pecapi.lilianhammache.com/auth/login",
 							"protocol": "http",
 							"host": [
 								"85.31.236.64"
@@ -365,7 +365,7 @@
 							}
 						],
 						"url": {
-							"raw": "http://85.31.236.64:3001/payments",
+							"raw": "https://pecapi.lilianhammache.com/payments",
 							"protocol": "http",
 							"host": [
 								"85.31.236.64"
@@ -406,7 +406,7 @@
 							}
 						},
 						"url": {
-							"raw": "http://85.31.236.64:3001/payments/psp",
+							"raw": "https://pecapi.lilianhammache.com/payments/psp",
 							"protocol": "http",
 							"host": [
 								"85.31.236.64"
@@ -448,7 +448,7 @@
 							}
 						},
 						"url": {
-							"raw": "http://85.31.236.64:3001/payments",
+							"raw": "https://pecapi.lilianhammache.com/payments",
 							"protocol": "http",
 							"host": [
 								"85.31.236.64"
@@ -476,7 +476,7 @@
 							}
 						},
 						"url": {
-							"raw": "http://85.31.236.64:3001/payments/685a93409c33f1106f8a18bc",
+							"raw": "https://pecapi.lilianhammache.com/payments/685a93409c33f1106f8a18bc",
 							"protocol": "http",
 							"host": [
 								"85.31.236.64"
@@ -502,7 +502,7 @@
 							}
 						],
 						"url": {
-							"raw": "http://85.31.236.64:3001/payments/8085a67a-c42d-42fb-afd6-945dd1a7a62f",
+							"raw": "https://pecapi.lilianhammache.com/payments/8085a67a-c42d-42fb-afd6-945dd1a7a62f",
 							"protocol": "http",
 							"host": [
 								"85.31.236.64"
@@ -535,7 +535,7 @@
 							}
 						],
 						"url": {
-							"raw": "http://85.31.236.64:3001/merchants",
+							"raw": "https://pecapi.lilianhammache.com/merchants",
 							"protocol": "http",
 							"host": [
 								"85.31.236.64"
@@ -563,7 +563,7 @@
 							}
 						],
 						"url": {
-							"raw": "http://85.31.236.64:3001/merchants/f061c809-cad7-4571-a8ef-011051997d73",
+							"raw": "https://pecapi.lilianhammache.com/merchants/f061c809-cad7-4571-a8ef-011051997d73",
 							"protocol": "http",
 							"host": [
 								"85.31.236.64"
@@ -591,7 +591,7 @@
 							}
 						],
 						"url": {
-							"raw": "http://85.31.236.64:3001/merchants/f061c809-cad7-4571-a8ef-011051997d73/credentials",
+							"raw": "https://pecapi.lilianhammache.com/merchants/f061c809-cad7-4571-a8ef-011051997d73/credentials",
 							"protocol": "http",
 							"host": [
 								"85.31.236.64"
@@ -634,7 +634,7 @@
 							}
 						},
 						"url": {
-							"raw": "http://85.31.236.64:3001/merchants/63363b69-189e-4b79-aef7-900720a8c7e7",
+							"raw": "https://pecapi.lilianhammache.com/merchants/63363b69-189e-4b79-aef7-900720a8c7e7",
 							"protocol": "http",
 							"host": [
 								"85.31.236.64"
@@ -662,7 +662,7 @@
 							}
 						],
 						"url": {
-							"raw": "http://85.31.236.64:3001/merchants/a40f9607-7864-4935-b386-cec9e2aea914",
+							"raw": "https://pecapi.lilianhammache.com/merchants/a40f9607-7864-4935-b386-cec9e2aea914",
 							"protocol": "http",
 							"host": [
 								"85.31.236.64"
@@ -679,7 +679,7 @@
 			]
 		},
 		{
-			"name": "http://85.31.236.64:3001/auth/register",
+			"name": "https://pecapi.lilianhammache.com/auth/register",
 			"request": {
 				"method": "POST",
 				"header": [
@@ -698,7 +698,7 @@
 					}
 				},
 				"url": {
-					"raw": "http://85.31.236.64:3001/auth/register",
+					"raw": "https://pecapi.lilianhammache.com/auth/register",
 					"protocol": "http",
 					"host": [
 						"85.31.236.64"

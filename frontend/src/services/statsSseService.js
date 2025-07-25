@@ -5,7 +5,7 @@ const statsSseService = {
 
   connect() {
     if (this.eventSource) return
-    this.eventSource = new EventSource('http://85.31.236.64:3001/sse/stats')
+    this.eventSource = new EventSource('https://pecapi.lilianhammache.com/sse/stats')
     this.eventSource.onmessage = (e) => {
       try {
         const data = JSON.parse(e.data)

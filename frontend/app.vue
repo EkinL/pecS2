@@ -489,7 +489,7 @@ export default {
       this.error = ''
       
       try {
-        const response = await fetch('http://85.31.236.64:3001/auth/login', {
+        const response = await fetch('https://pecapi.lilianhammache.com/auth/login', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json'
@@ -535,7 +535,7 @@ export default {
       this.error = ''
       
       try {
-        const response = await fetch('http://85.31.236.64:3001/auth/register', {
+        const response = await fetch('https://pecapi.lilianhammache.com/auth/register', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json'
@@ -571,7 +571,7 @@ export default {
     
     async loadPayments() {
       try {
-        const response = await fetch('http://85.31.236.64:3001/payments', {
+        const response = await fetch('https://pecapi.lilianhammache.com/payments', {
           headers: {
             'Authorization': `Bearer ${this.token}`
           }
@@ -588,7 +588,7 @@ export default {
     
     async loadClientPayments() {
       try {
-        const response = await fetch('http://85.31.236.64:3001/payments', {
+        const response = await fetch('https://pecapi.lilianhammache.com/payments', {
           headers: {
             'Authorization': `Bearer ${this.token}`
           }
@@ -605,7 +605,7 @@ export default {
 
     async fetchCurrentUser() {
       try {
-        const response = await fetch('http://85.31.236.64:3001/auth/me', {
+        const response = await fetch('https://pecapi.lilianhammache.com/auth/me', {
           headers: {
             'Authorization': `Bearer ${this.token}`
           }
@@ -627,7 +627,7 @@ export default {
           seller_id: this.userInfo._id
         }
 
-        const response = await fetch('http://85.31.236.64:3001/payments', {
+        const response = await fetch('https://pecapi.lilianhammache.com/payments', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
@@ -660,7 +660,7 @@ export default {
     
     async updatePaymentStatus(paymentId, status) {
       try {
-        const response = await fetch(`http://85.31.236.64:3001/payments/${paymentId}`, {
+        const response = await fetch(`https://pecapi.lilianhammache.com/payments/${paymentId}`, {
           method: 'PUT',
           headers: {
             'Content-Type': 'application/json',
@@ -680,7 +680,7 @@ export default {
     async deletePayment(paymentId) {
       if (confirm('Êtes-vous sûr de vouloir supprimer ce paiement ?')) {
         try {
-          const response = await fetch(`http://85.31.236.64:3001/payments/${paymentId}`, {
+          const response = await fetch(`https://pecapi.lilianhammache.com/payments/${paymentId}`, {
             method: 'DELETE',
             headers: {
               'Authorization': `Bearer ${this.token}`
@@ -698,7 +698,7 @@ export default {
     
     async generateCredentials() {
       try {
-        const response = await fetch(`http://85.31.236.64:3001/users/${this.userInfo._id}/credentials`, {
+        const response = await fetch(`https://pecapi.lilianhammache.com/users/${this.userInfo._id}/credentials`, {
           method: 'POST',
           headers: {
             'Authorization': `Bearer ${this.token}`

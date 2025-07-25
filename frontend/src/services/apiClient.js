@@ -3,7 +3,7 @@ import store from "../store"
 import router from "../router"
 
 const apiClient = axios.create({
-  baseURL: "http://85.31.236.64:3001",
+  baseURL: "https://pecapi.lilianhammache.com",
   timeout: 10000,
 })
 
@@ -33,7 +33,7 @@ apiClient.interceptors.response.use(
       try {
         const refreshToken = store.state.auth.refreshToken
         if (refreshToken) {
-          const response = await axios.post("http://85.31.236.64:3001/auth/refresh", {
+          const response = await axios.post("https://pecapi.lilianhammache.com/auth/refresh", {
             refreshToken,
           })
 
