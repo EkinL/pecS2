@@ -7,6 +7,15 @@
           <p class="mt-2 text-sm text-gray-700">Liste de tous vos paiements et transactions.</p>
         </div>
       </div>
+      <div class="mt-4">
+        <input
+          v-model="search"
+          @keyup.enter="doSearch"
+          type="text"
+          placeholder="Rechercher"
+          class="border rounded px-3 py-2 w-full"
+        />
+      </div>
 
       <!-- Payments Table -->
       <div class="mt-8 flex flex-col">
@@ -89,7 +98,8 @@ export default {
   },
   data() {
     return {
-      sse: null
+      sse: null,
+      search: ''
     }
   },
   computed: {
@@ -104,6 +114,9 @@ export default {
   },
   methods: {
     ...mapActions('payments', ['fetchPayments', 'refundPayment']),
+    doSearch() {
+      this.fetchPayments({ q: this.search })
+    },
     async refund(paymentId) {
       await this.refundPayment(paymentId)
     },
