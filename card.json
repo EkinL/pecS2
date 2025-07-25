@@ -1,0 +1,73 @@
+[
+    {
+      "cardNumber": "4242424242424242",
+      "expMonth": 8,
+      "expYear": 2026,
+      "cvc": "123",
+      "scenario": "valid"
+    },
+    {
+      "cardNumber": "4000000000000069",
+      "expMonth": 1,
+      "expYear": 2020,
+      "cvc": "456",
+      "scenario": "expired"
+    },
+    {
+      "cardNumber": "4000000000009995",
+      "expMonth": 9,
+      "expYear": 2025,
+      "cvc": "789",
+      "scenario": "insufficient_funds"
+    },
+    {
+      "cardNumber": "4000000000009979",
+      "expMonth": 12,
+      "expYear": 2027,
+      "cvc": "321",
+      "scenario": "stolen_card"
+    },
+    {
+      "cardNumber": "4000000000000002",
+      "expMonth": 7,
+      "expYear": 2028,
+      "cvc": "654",
+      "scenario": "invalid_number"
+    },
+    {
+      "cardNumber": "4000000000000010",
+      "expMonth": 5,
+      "expYear": 2026,
+      "cvc": "159",
+      "scenario": "cvc_mismatch"
+    },
+    {
+      "cardNumber": "4000000000000119",
+      "expMonth": 3,
+      "expYear": 2029,
+      "cvc": "753",
+      "scenario": "processing_error"
+    },
+    {
+      "cardNumber": "5555555555554444",
+      "expMonth": 11,
+      "expYear": 2026,
+      "cvc": "951",
+      "scenario": "valid"
+    },
+    {
+      "cardNumber": "6011111111111117",
+      "expMonth": 2,
+      "expYear": 2027,
+      "cvc": "852",
+      "scenario": "valid"
+    },
+    {
+      "cardNumber": "3782822463100050",
+      "expMonth": 6,
+      "expYear": 2026,
+      "cvc": "741",
+      "scenario": "valid"
+    }
+  ]
+  
