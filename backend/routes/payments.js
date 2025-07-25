@@ -52,6 +52,11 @@ router.get(
       where[Op.or] = [
         literal(`CAST("Payment"."id" AS TEXT) ILIKE '${pattern}'`),
         { stripe_id: { [Op.iLike]: pattern } },
+        { '$seller.companyName$': { [Op.iLike]: pattern } },
+        { '$seller.firstName$': { [Op.iLike]: pattern } },
+        { '$seller.lastName$': { [Op.iLike]: pattern } },
+        { '$buyer.firstName$': { [Op.iLike]: pattern } },
+        { '$buyer.lastName$': { [Op.iLike]: pattern } },
       ];
     }
 
@@ -84,7 +89,7 @@ router.get(
       ];
     }
     const allMongo = await PaymentMongo.find(filter).exec();
-    const withUsers = await Promise.all(allMongo.map(async p => {
+    let withUsers = await Promise.all(allMongo.map(async p => {
       const seller = await UserMongo.findById(p.seller_id).exec();
       const buyer = await UserMongo.findById(p.buyer_id).exec();
       const obj = p.toJSON();
@@ -92,6 +97,18 @@ router.get(
       obj.buyer = buyer ? buyer.toJSON() : null;
       return obj;
     }));
+    if (q) {
+      const regex = new RegExp(q, 'i');
+      withUsers = withUsers.filter(p =>
+        regex.test(String(p._id)) ||
+        regex.test(p.stripe_id || '') ||
+        regex.test(p.seller?.companyName || '') ||
+        regex.test(p.seller?.firstName || '') ||
+        regex.test(p.seller?.lastName || '') ||
+        regex.test(p.buyer?.firstName || '') ||
+        regex.test(p.buyer?.lastName || '')
+      );
+    }
     return res.json(withUsers);
   }
 );
